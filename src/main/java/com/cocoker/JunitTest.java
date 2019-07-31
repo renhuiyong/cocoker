@@ -19,6 +19,7 @@ package com.cocoker;//package com.cocoker;
 //@SpringBootTest(classes={CocokerApplication.class})
 //public class JunitTest {
 //	@Autowired
+
 //	private OrderService orderService;
 //	@Autowired
 //    private EchartsDao echartsDao;
