@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>排行</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../static/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/coco.css}" href="../static/css/coco.css"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/cocoker/css/icons-extra.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        *{
+            text-decoration:none;
+        }
+        .mui-slider-indicator .mui-indicator{
+            box-shadow:none;
+        }
+        .h35{
+            height: 35px;
+            width: auto;
+        }
+        .h45{
+            height: 45px;
+            width: auto;
+        }
+        .ml15 {
+            margin-left: 15px;
+        }
+        .zdid{
+            font-size: 20px;
+            width: 33px;
+            text-align: center;
+            display: inline-block;
+        }
+        .mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after{
+            display: none;
+        }
+        .mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn){
+            margin-right:-95px;
+        }
+        .fr{
+            float: right;
+        }
+        .pdt10{
+            padding-top: 10px;
+        }
+        .zdnum{
+            color:#E5B28E;
+        }
+        .picss{
+            width: 100%;
+            text-align: center;
+        }
+        #slider{
+            margin-top: 44px;
+        }
+        .mui-bar-nav{
+            box-shadow: none;
+        }
+        .mui-bar,.mui-title,.mui-action-back{
+            background-color:#151E2E;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">排行榜</h1>
+</header>
+<div id="slider" class="mui-slider" >
+    <div class="mui-slider-group mui-slider-loop">
+        <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+        <div class="mui-slider-item mui-slider-item-duplicate">
+            <a href="javasctipt:void(0)">
+                <img th:src="@{/images/img/phimg.png}"/>
+            </a>
+        </div>
+        <!-- 第一张 -->
+        <div class="mui-slider-item">
+            <a href="javasctipt:void(0)">
+                <img th:src="@{/images/img/phimg.png}"/>
+            </a>
+        </div>
+        <!-- 第二张 -->
+        <div class="mui-slider-item">
+            <a href="javasctipt:void(0)">
+                <img th:src="@{/images/img/phimg.png}"/>
+            </a>
+        </div>
+        <!-- 第三张 -->
+        <div class="mui-slider-item">
+            <a href="javasctipt:void(0)">
+                <img th:src="@{/images/img/phimg.png}"/>
+            </a>
+        </div>
+        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+        <div class="mui-slider-item mui-slider-item-duplicate">
+            <a href="javasctipt:void(0)">
+                <img th:src="@{/images/img/phimg.png}"/>
+            </a>
+        </div>
+    </div>
+    <div class="mui-slider-indicator">
+        <div class="mui-indicator mui-active"></div>
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+    </div>
+</div>
+
+
+<div class="picssprev">
+<!--    <div class="picss"><img class="userpic"></div>-->
+    <!-- 排行-->
+    <ul id="list" class="mui-table-view mui-table-view-chevron zdlist">
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right">
+                <img th:src="@{/images/img/ph1.png}" class="h35"/>
+                <img style="border-radius: 50%;" th:src="${no1.y_upic}" class="h45 ml15"/>
+                <span class="ml5">[[${no1.y_nickname}]]</span>
+                <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
+            </a>
+        </li>
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right">
+                <img th:src="@{/images/img/ph2.png}" class="h35"/>
+                <img th:src="${no2.y_upic}" style="border-radius: 50%;" class="h45 ml15"/>
+                <span class="ml5">[[${no2.y_nickname}]]</span>
+                <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
+            </a>
+        </li>
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right">
+                <img th:src="@{/images/img/ph3.png}" class="h35"/>
+                <img th:src="${no3.y_upic}" style="border-radius: 50%;" class="h45 ml15"/>
+                <span class="ml5">[[${no3.y_nickname}]]</span>
+                <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
+            </a>
+        </li>
+        <li th:each="order,index : ${ods3}" class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right">
+                <span class="zdid">[[${index.index}+4]]</span>
+                <img style="border-radius: 50%;" th:src="${order.y_upic}" class="h45 ml15"/>
+                <span class="ml5">[[${order.y_nickname}]]</span>
+                <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+
+
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery.qrcode.min.js}"></script>
+<script th:src="@{/js/mui.min.js}" src="../static/js/mui.min.js"></script>
+<script th:src="@{/js/myvue.js}"></script>
+<script th:src="@{/js/other.js}"></script>
+<script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
+<script th:src="@{dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
+<script>
+    var slider = mui("#slider");
+        slider.slider({
+            interval: 3000
+        });
+
+    document.getElementById('notice').play();
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+</html>

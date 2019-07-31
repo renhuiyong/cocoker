@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>西瓜赢家</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../css/mui.min.css">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/icons-extra.css}" type="text/css" href="../css/icons-extra.css"/>
+    <style>
+        .mui-slider-indicator {
+            bottom: 0;
+        }
+
+        .mui-media-body {
+            font-family: "Microsoft Yahei", "微软雅黑", Arial, Tahoma;
+            font-size: 16px !important;
+        }
+
+        .mui-slider {
+            background-color: #f2f2f2;
+        }
+
+        .mui-table-view li {
+            width: 33%;
+        }
+
+        .mui-badge-primary {
+            border-radius: 20px;
+        }
+
+        .mui-badge-success {
+            border-radius: 20px;
+        }
+
+        a, .mui-media-body {
+            color: #fff !important;
+        }
+
+        .mui-content, body {
+            background-color: #000 !important;
+        }
+
+        .fsik {
+            background: url("images/newimg/sign-bg.png");
+        }
+
+        .mui-grid-view.mui-grid-9 .mui-table-view-cell, .mui-grid-view.mui-grid-9 {
+            border: none;
+        }
+
+        .bnone {
+            border: none;
+        }
+
+        .proxyInfo {
+            width: 100% !important;
+            padding: 0 10px;
+            height: 50px;
+            -webkit-box-shadow: 1px 1px 1px #999;
+            -moz-box-shadow: 1px 1px 1px #999;
+            box-shadow: 1px 1px 1px #999;
+        }
+
+        .mui-media-body {
+            float: right;
+        }
+
+        .mui-icon, .mui-media-body {
+            line-height: 50px;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+        }
+
+        .mg {
+            margin-left: 33%;
+        }
+    </style>
+</head>
+
+<body class="fsik">
+
+<!--<header class="mui-bar mui-bar-nav">-->
+<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+<!--<h1 class="mui-title">我的统计</h1>-->
+<!--</header>-->
+<div class="mui-content">
+    <div id="Gallery" class="mui-slider bnone">
+        <div class="mui-slider-group">
+            <div class="mui-slider-item">
+                <ul class="mui-table-view mui-grid-view mui-grid-9 fsik">
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    </li>
+                    <li style="height: 100%;" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <a href="#">
+                            <span class="mui-icon">
+                                <img style="border-radius: 50%" th:src="${user.yUpic}" alt="">
+                            </span>
+                            <div class="mui-media-body" th:text="${user.yNickname}">about</div>
+                        </a>
+                    </li>
+
+                    <li leven="1" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">一级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.one}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="2" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">二级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.two}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="3" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">三级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.three}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="4" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">四级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.four}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="5" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">五级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.five}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="6" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">六级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.six}]]</div>
+                        </a>
+                    </li>
+
+                    <li leven="7" class="proxyInfo">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-extra mui-icon-extra-people fl"></span>
+                            <span class="mui-media-body fl mg">七级会员</span>
+                            <div class="mui-media-body fr">[[${proxy.seven}]]</div>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<p>&nbsp;&nbsp;收益明细</p>
+<li   style="margin-bottom: 10px;list-style:none;" >
+    <span style="color: white;width: 10%;display: inline-block">&nbsp;&nbsp;ID</span>
+    <span style="color: white;width: 25%;display: inline-block">用户名</span>
+    <span style="color: white;width: 35%;display: inline-block">时间</span>
+    <span style="color: white;width: 10%;display: inline-block">收入</span>
+    <span style="color: white;width: 10%;display: inline-block">级别</span>
+</li>
+<li th:if="${commissionsInfo} != null" style="margin-bottom: 10px;list-style:none;" th:each="user,userStat : ${commissionsInfo}">
+    <span style="color: white;width: 10%;display: inline-block">&nbsp;&nbsp;[[${userStat.index} +1]]</span>
+    <span style="color: white;width: 25%;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">[[${user.cOpenidM}]]</span>
+    <span style="color: white;width: 35%;display: inline-block">[[${#dates.format(user.createTime,'MM-dd - hh:mm:ss')}]]</span>
+    <span style="color: white;width: 10%;display: inline-block">[[${user.cMoney}]]</span>
+    <span style="color: white;width: 10%;display: inline-block">[[${user.cLeven}]]级</span>
+</li>
+<li th:if="${commissionsInfo} == null" style="margin-bottom: 10px;list-style:none;">
+    <center style="color: white">暂无下级收益详情,推广可获得收益!</center>
+</li>
+
+<div id="app"></div>
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+<form id="form1" method="post">
+
+</form>
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script th:src="@{/js/mui.min.js}" src="../js/mui.min.js"></script>
+<script th:src="@{/js/myvue.js}"></script>
+
+<script>
+    document.getElementById('notice').play();
+
+    //    mui.init({
+    //        swipeBack: false //启用右滑关闭功能
+    //    });
+    mui('.mui-slider').slider().stopped = true;
+
+    $(function () {
+        $('.proxyInfo').click(function () {
+            console.log($(this).attr("leven"))
+            console.log(getCookie('openid'))
+//            + "&openid=" + getCookie('openid')
+            $('#form1').attr("action", "/cocoker/proxyInfo?leven=" + $(this).attr("leven") + "&openid=" + getCookie('openid')).submit();
+            return false;
+        });
+    })
+</script>
+
+</html>

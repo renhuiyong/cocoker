@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>总佣金</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../static/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/coco.css}" href="../static/css/coco.css"/>
+    <link rel="stylesheet" type="text/css" href="/cocoker/css/icons-extra.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script th:src="@{/js/mui.min.js}" src="../static/js/mui.min.js"></script>
+    <style>
+        *{
+            text-decoration:none;
+        }
+        .mui-bar-nav{
+            box-shadow: none;
+        }
+        table{
+            margin-top: 44px;
+            background-color: #fff;
+            width: 100%;
+            table-layout: fixed;
+        }
+        table tr td {
+            border:0;
+            border-color: transparent;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow:ellipsis;
+        }
+        .bgcolor,.mui-bar,.mui-title,.mui-action-back{
+            background-color:#151E2E;
+            font-weight: bold;
+            color: #fff;
+        }
+        .bgcolor td{
+            background-color:#151E2E;
+        }
+
+    </style>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">总佣金列表</h1>
+</header>
+
+                <table class="table table-hover">
+                    <tbody>
+                    <tr class="bgcolor">
+                        <td style="width:34%;">订单时间</td>
+                        <td style="width:20%;">用户</td>
+                        <!--<td>交易金额</td>-->
+                        <td>等级</td>
+                        <td>佣金</td>
+                    </tr>
+
+                    <tr th:each="commissions : ${commissionsInfo}">
+                        <td> [[${#dates.format(commissions.createTime,'MM-dd - hh:mm:ss')}]] </td>
+                        <td>[[${commissions.cOpenidM}]]</td>
+                        <!--<td>[[${commissions.cMoney}]]</td>-->
+                        <td>[[${commissions.cLeven}]]</td>
+                        <td>[[${commissions.cMoney}]]</td>
+                    </tr>
+
+                    <tr th:if="${commissionsInfo} == null">
+                        <td colspan="4">
+                            暂无下级收益详情,推广可获得收益!
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script>
+    document.getElementById('notice').play();
+
+
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+</html>

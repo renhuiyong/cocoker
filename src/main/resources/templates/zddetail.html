@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>战队详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../static/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/coco.css}" href="../static/css/coco.css"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/cocoker/css/icons-extra.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        *{
+            text-decoration:none;
+        }
+        .mui-bar-nav{
+            box-shadow: none;
+        }
+        table {
+            width: 100%;
+            margin-top: 44px;
+        }
+
+        table tr td {
+            border:0;
+            border-color: transparent;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10px 0;
+            /*background-color: rgba(255,255,255,.2);*/
+        }
+        .tableimg {
+            height: 25px;
+            width: 25px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+        .bgcolor,.mui-bar,.mui-title,.mui-action-back{
+            background-color:#151E2E;
+            font-weight: bold;
+            color: #fff;
+        }
+        .bgcolor td{
+            background-color:#151E2E;
+        }
+    </style>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">战队详情</h1>
+</header>
+
+<table style="table-layout: fixed">
+    <tbody>
+    <tr class="bgcolor">
+        <td>注册时间</td>
+        <td>用户</td>
+        <td>名字</td>
+        <td>等级</td>
+        <td>余额</td>
+    </tr>
+
+    <!--<li th:each="user,userStat : ${leven}" class="proxy1">-->
+        <!--&lt;!&ndash;<a><span class="mui-icon-extra mui-icon-extra-people"></span></a>&ndash;&gt;-->
+        <!--<a href="#" style="display: inline-block; width: 100%;">-->
+            <!--<span class="mui-icon mui-icon-extra fl"><img class="proimg" th:src="${user.yUpic}" alt=""></span>-->
+            <!--<p class="fl">[[${user.yNickname}]]</p>-->
+            <!--<p class="fr" th:text="${userStat.index} +1"></p>-->
+        <!--</a>-->
+    <!--</li>-->
+
+
+    <tr style="border-bottom: 1px dashed" th:each="user,userStat : ${leven}">
+        <td>[[${#dates.format(user.yCreatetime,'yyyy-MM-dd')}]]</td>
+        <td><img class="tableimg" th:src="${user.yUpic}"></td>
+        <td style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">[[${user.yNickname}]]</td>
+        <td class="red">[[${flag}]]级</td>
+        <td>[[${user.yUsermoney}]]$</td>
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(leven)}">
+        <td colspan="4"> 您的[[${flag}]]级下级为空</td>
+    </tr>
+    </tbody>
+</table>
+
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery.qrcode.min.js}"></script>
+<script th:src="@{/js/mui.min.js}" src="../static/js/mui.min.js"></script>
+<script th:src="@{/js/myvue.js}"></script>
+<script th:src="@{/js/other.js}"></script>
+<script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
+<script th:src="@{dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
+<script>
+    document.getElementById('notice').play();
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+</html>

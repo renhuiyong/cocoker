@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>提现记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../static/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/coco.css}" href="../static/css/coco.css"/>
+    <link rel="stylesheet" type="text/css" href="/cocoker/css/icons-extra.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script th:src="@{/js/mui.min.js}" src="../static/js/mui.min.js"></script>
+
+    <style>
+        .mui-bar-nav{
+            box-shadow: none;
+        }
+        .mui-bar,.mui-title,.mui-action-back{
+            background-color:#151E2E;
+            font-weight: bold;
+            color: #fff;
+        }
+        .mui-content{
+            background-color: #fff;
+        }
+        .mui-table-view{
+            margin-top: 44px;
+        }
+        .mt5{
+            margin-top: 5px;
+            font-weight: normal;
+        }
+        .mui-media-body{
+            font-weight: bold;
+        }
+        .tired,.tigreen{
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .tired{
+            color: #dc433e;
+        }
+        .tigreen{
+            color: #61A548;
+        }
+    </style>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">提现记录</h1>
+</header>
+
+<ul class="mui-table-view">
+    <li th:each="e : ${excharge}" class="mui-table-view-cell mui-media">
+        <a href="javascript:;">
+            <span class="mui-media-object mui-pull-right tigreen">- [[${e.tMoney}]]</span>
+            <div class="mui-media-body">
+                已成功
+                <p class='mui-ellipsis mt5'>[[${#dates.format(e.createTime,'yyyy-MM-dd - hh:mm:ss')}]]</p>
+            </div>
+        </a>
+    </li>
+</ul>
+
+
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script>
+    document.getElementById('notice').play();
+
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" th:href="@{/css/mui.min.css}" href="../static/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/coco.css}" href="../static/css/coco.css"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/cocoker/css/icons-extra.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        /*.btnsdiv2 {*/
+        /*background-color:skyblue !important;*/
+        /*}*/
+        .mui-btn-block {
+            font-size: 18px;
+            display: block;
+            width: 80%;
+            padding: 15px 0;
+            color: #000;
+            border: 0;
+            margin: 40px auto;
+            border-radius: 30px;
+            background-color: #EBB33F;
+        }
+
+        .btndiv2 {
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btnsdiv2 {
+            background: #EBB33F !important;
+            color: #000 !important;
+            border: 0;
+        }
+
+        .btndiv2 button {
+            width: 25%;
+            height: 50px;
+            line-height: 30px;
+            margin: 2% 4%;
+            color: #000;
+            background-color: #DCE0E4;
+            float: left;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        .white {
+            background-color: #ffffff;
+        }
+
+        .btn {
+            padding: 0 12px !important;
+        }
+
+        .userpic {
+            margin-top: 0;
+        }
+
+        .xzcz {
+            color: #000;
+            margin-top: 10%;
+            font-size: 18px;
+            margin-left: 15px;
+        }
+
+        .tz {
+            height: 180px;
+            padding: 5px;
+            margin-top: 10px;
+            border-radius: 5%;
+            background-color: rgba(255, 255, 255, .1);
+            color: #999;
+            margin-top: 20%;
+        }
+
+        .mui-table-view:before, .mui-table-view-cell:after, .mui-table-view:after {
+            background-color: transparent;
+        }
+
+        .mui-table-view-cell {
+            padding: 12px 15px;
+        }
+
+        .mui-table-view-radio > li > a {
+            font-size: 16px;
+        }
+
+        .zf {
+            height: 22px;
+            width: 22px;
+            margin-right: 10px;
+        }
+
+        .mui-bar-nav {
+            box-shadow: none;
+        }
+
+        .mui-bar, .mui-title, .mui-action-back {
+            background-color: #151E2E;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .mui-content {
+            background-color: #fff;
+        }
+    </style>
+<body class="black">
+
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">充值</h1>
+</header>
+
+
+<div class="mui-content white">
+    <div>
+        <!--        <div class="row clearfix" style="padding: 10px;">-->
+        <!--            <img style="float: left" class="userpic">-->
+        <!--            <div style="width: 70%;float: left;font-size: 12px;color: #fff">-->
+        <!--                账号：<span class="nickname"></span><br/>-->
+        <!--                金额：<span class="money"></span>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <h6 class="xzcz">充值金额</h6>
+        <div class="btndiv2">
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>3
+            </button>
+            <button type="button" class="btn btn-default"><span>$&nbsp;</span>10</button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>20
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>30
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>50
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>100
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>200
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>500
+            </button>
+            <button type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                style="font-size: 10px;">$&nbsp;</span>1000
+            </button>
+
+        </div>
+        <!--        <p style="text-align: center">当前汇率: <span class="c1"></span></p>-->
+        <p style="text-align: center">需支付: <span class="c2">20</span></p>
+        <p style="text-align: center">充值与结算汇率一样</p>
+        <!--        <div style="text-align: center">-->
+        <!--            &lt;!&ndash;<button type="button" style="width: 80%;height:30px;color: #fff;background-color: red; border: none;" class="btn btn-info transaction">立即支付</button>&ndash;&gt;-->
+        <!--            <img class=" transaction" style="height: 40%;width: 80%; margin: 5% 0px;" th:src="@{/images/ligh.png}"-->
+        <!--                 src="" alt=""></div>-->
+        <!--    </div>-->
+        <h6 class="xzcz">支付方式</h6>
+        <ul class="mui-table-view mui-table-view-radio">
+            <li mt="wx1" rm="1" class="mui-table-view-cell mui-selected">
+                <a class="mui-navigate-right">
+                    <img class="zf" th:src="@{/images/wxzf.png}">微信H5支付 <span style="color: green">(可用 <span
+                        style="font-size: 10px">跳转浏览器充值</span>)</span>
+                </a>
+            </li>
+<!--            <li mt="wx1" rm="2" class="mui-table-view-cell">-->
+<!--                &lt;!&ndash;            <li mt="wx2" rm="2" class="mui-table-view-cell">&ndash;&gt;-->
+<!--                <a class="mui-navigate-right">-->
+<!--                    <img class="zf" th:src="@{/images/wxzf.png}">微信扫码支付 <span style="color: green">(可用 <span-->
+<!--                        style="font-size: 10px">长按扫码充值</span>)</span>-->
+<!--                </a>-->
+<!--            </li>-->
+            <!--<li class="mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right">-->
+            <!--<img class="zf" th:src="@{/images/zfbzf.png}">支付宝支付-->
+            <!--</a>-->
+            <!--</li>-->
+        </ul>
+
+        <button type="button" class="mui-btn mui-btn-warning mui-btn-block transaction">立即充值</button>
+        <div id="main" style="display: none"></div>
+
+        <!--<div class="tz">-->
+        <!--<h5 style="text-align: center">充值须知</h5>-->
+        <!--<h6>1.本平台采用自带的充值功能进行入金，若您在充值过程中出现充值未到账等情况，请退出平台重新进入即可看见余额，这个是您缓存的问题。一般充值秒到账。-->
+        <!--<br>2.如果您充值的时候遇见了限额，请稍后确认-->
+        <!--<br>3.如果您充值的时候遇见了商户系统错误，请点击确定，然后多尝试按几次【确定支付】即可完成支付-->
+        <!--<br>4.发现骗单，一律封停！-->
+        <!--</h6>-->
+        <!--</div>-->
+        <!--    <div style="text-align: center">-->
+        <!--        <img style="height: 40%;width: 80%; margin: 5% 0px;" th:src="@{/images/hgxz.png}" src="" alt=""></div>-->
+        <!--    <br>-->
+    </div>
+</div>
+<div id="app"></div>
+<form id="transactionForm" method="post">
+    <input type="hidden" id="openid" name="openid">
+    <input type="hidden" id="remake" name="remake">
+    <input type="hidden" id="money" name="money">
+    <input type="hidden" id="type" name="type">
+</form>
+<!--音乐-->
+<audio id="notice" loop="loop">
+    <source src="/cocoker/mp3/song.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery.qrcode.min.js}"></script>
+<script th:src="@{/js/mui.min.js}" src="../static/js/mui.min.js"></script>
+<script th:src="@{/js/myvue.js}"></script>
+<script th:src="@{/js/other.js}"></script>
+<script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
+<script th:src="@{dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
+<script>
+
+    $('.mui-table-view-radio>li').on('tap', function () {
+//        console.log($(this).children('a').text());
+    })
+    // mui('.mui-input-group').on('change', 'input', function() {
+    //     var value = this.checked?"true":"false";
+    //     this.previousElementSibling.innerText = "checked："+value;
+    // });
+
+    document.getElementById('notice').play();
+
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    setInterval(function () {
+        var num = '7' + random(10, 50);
+        $('.c1').text(6.79 + num);
+    }, 1000);
+
+    $.ajax({
+        url: "/cocoker/user/get",
+        data: {"openid": getCookie('openid')},
+        success: function (result) {
+            if (result.code == 0) {
+                var user = result.data;
+                $('.userpic').attr("src", user.upic);
+                $('.nickname').text(user.nickname)
+                $('.money').text(user.usermoney)
+            }
+        },
+        error: function (result) {
+        }
+    });
+    //效果
+    $('.btndiv2 button').click(function () {
+        $('.btndiv2 button').removeAttr("check").removeClass('btnsdiv2');
+        $(this).attr("check", "check").addClass('btnsdiv2');
+        // $(".c2").text((Number(this.innerText.substring(2) * 6.89).toFixed(2)));
+        if (this.innerText.substring(2) == "3") {
+            $(".c2").text("20");
+        } else {
+            $(".c2").text(this.innerText.substring(2) * 7);
+        }
+
+    });
+
+    function random(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower)) + lower;
+    }
+
+    //提交
+    $('.transaction').click(function () {
+        if ($('.btndiv2 button[check=check]').length < 1) {
+            popup({type: 'tip', msg: "请选择数量", delay: 1500});
+            return
+        }
+
+        //设置值
+        $("#openid").val(getCookie('openid'));
+        $("#money").val($('.btndiv2 button[check=check]')[0].innerText.substring(2));
+        $("#type").val($('.mui-selected').attr('mt'));
+        $("#remake").val($('.mui-selected').attr('rm'));
+//        console.log($('.mui-table-view-radio > li').children('a').text());
+//        console.log($('.mui-selected').attr('mt'));
+        //发起请求
+        if ($('.mui-selected').attr('mt') == "wx1") {
+            popup({type: 'success', msg: "充值与结算汇率一样", delay: 1500});
+            setTimeout(function () {
+                $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
+            },1700)
+        }
+        if ($('.mui-selected').attr('mt') == "wx2") {
+            $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
+            // $("#transactionForm").attr("action", "/cocoker/transaction/recharge2").submit();
+        }
+        //改变颜色
+        $('.btndiv2 button').removeAttr("check").removeClass('btnsdiv2');
+//        $.ajax({
+//            url: "/cocoker/transaction/recharge",
+//            data: {"openid": getCookie('openid'),"money":$('.btndiv2 button[check=check]')[0].innerText.substring(3)},
+//            type: "POST",
+//            success: function (result) {
+//                console.log(result);
+//            }
+//        })
+
+    });
+</script>
+</html>

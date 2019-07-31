@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf8">
+    <title>正在跳转...</title>
+</head>
+<body onLoad="document.pay.submit()">
+<!--<body>-->
+<form method="post" th:action="${pay_url}" name="pay">
+    <input type="hidden" name="pay_memberid" th:value="${pay_memberid}">
+    <input type="hidden" name="pay_orderid" th:value="${pay_orderid}">
+    <input type="hidden" name="pay_applydate" th:value="${pay_applydate}">
+    <input type="hidden" name="pay_bankcode" th:value="${pay_bankcode}">
+    <input type="hidden" name="pay_notifyurl" th:value="${pay_notifyurl}">
+    <input type="hidden" name="pay_callbackurl" th:value="${pay_callbackurl}">
+    <input type="hidden" name="pay_amount" th:value="${pay_amount}">
+    <input type="hidden" name="pay_md5sign" th:value="${pay_md5sign}">
+    <input type="hidden" name="pay_productname" th:value="${pay_productname}">
+</form>
+</body>
+</html>
