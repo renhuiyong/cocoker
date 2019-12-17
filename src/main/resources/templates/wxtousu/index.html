@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/ts.css}">
+    <title>投诉</title>
+</head>
+<body>
+<div class="w100">
+    <div class="web2"><span class="ptitle" style="font-size: 12px">请选择投诉该网页的原因：</span></div>
+    <ul class="chose">
+        <li>
+            <a href="tsInfo">网页包含欺诈信息（如：假红包）</a>
+            <a href="tsInfo">
+                <image class="back-icon"  th:src="@{/images/jiantouyou.png}"
+                       alt="">
+            </a>
+        </li>
+        <li>
+            <a href="tsInfo">页面包含色情信息</a>
+            <a href="tsInfo">
+                <image class="back-icon" th:src="@{/images/jiantouyou.png}"
+                       alt="">
+            </a></li>
+        <li><a href="tsInfo">网页包含暴力恐怖信息</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+        <li><a href="tsInfo">网页包含政治敏感信息</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+        <li><a href="tsInfo">网页在收集个人隐私信息（如：钓鱼连接）</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+        <li><a href="tsInfo">网页包含诱导分享/关注性质等内容</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+        <li><a href="tsInfo">网页可能包含谣言信息</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+        <li><a href="tsInfo">网页包含赌博信息</a><a href="./jump4.html">
+            <image class="back-icon"  th:src="@{/images/jiantouyou.png}"  alt="">
+        </a></li>
+    </ul>
+    <div class="main-bot">
+<!--        <span class="bot-title"><a href="lljc" style="color: #4388d4">遇到网页流量被劫持怎么办？</a></span>-->
+        <!--            <div class="bot-btn"> <a  class="color-btn" href="./know.html">投诉须知</a> </div>-->
+    </div>
+</div>
+<script>
+    $("a").on("tap", function (event) {
+        event.stopPropagation();
+    });
+</script>
+</body>
+</html>

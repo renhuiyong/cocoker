@@ -23,7 +23,7 @@ public class RechargeServiceImpl implements RechargeService {
     private RechargeDao rechargeDao;
 
     @Override
-    public Recharge findRechargeByTopenid(String openid) {
+    public Recharge findRechargeByOrderId(String openid) {
         return rechargeDao.findByTorderid(openid);
     }
 
@@ -39,6 +39,6 @@ public class RechargeServiceImpl implements RechargeService {
 
     @Override
     public Page<Recharge> findByTstatus(Integer status, Pageable pageable) {
-        return rechargeDao.findByTstatus(status,pageable);
+        return rechargeDao.findByTstatus(status, pageable);
     }
 }

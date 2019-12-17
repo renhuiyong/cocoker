@@ -4,7 +4,7 @@ import com.cocoker.VO.ResultVO;
 
 public class ResultVOUtil {
 
-    public static ResultVO success(Object o){
+    public static ResultVO success(Object o) {
         ResultVO resultVO = new ResultVO();
         resultVO.setCode(0);
         resultVO.setMsg("ok");
@@ -12,11 +12,20 @@ public class ResultVOUtil {
         return resultVO;
     }
 
-    public static  ResultVO success(){
+
+    public static ResultVO error(Object o) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setCode(-1);
+        resultVO.setMsg("no");
+        resultVO.setData(o);
+        return resultVO;
+    }
+
+    public static ResultVO success() {
         return success(null);
     }
 
-    public static ResultVO error(Integer code,String msg){
+    public static ResultVO error(Integer code, String msg) {
         ResultVO resultVO = new ResultVO();
         resultVO.setMsg(msg);
         resultVO.setCode(code);

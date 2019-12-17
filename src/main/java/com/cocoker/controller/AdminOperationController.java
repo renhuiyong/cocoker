@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import static com.cocoker.utils.MathUtil.*;
+
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 import static com.cocoker.utils.MathUtil.*;
 import static com.cocoker.utils.DateUtil.*;
+
 /**
  * @Description:
  * @Author: y
@@ -53,6 +56,8 @@ public class AdminOperationController {
     public static Integer EchartsConst = 0;
 
     public static Integer OrderConst = 0;
+
+    public static Integer updConst = 0;
 
     private static String[] IMAGE_LOCATIONS = new String[]{"https://pic.qqtn.com/up/2019-5/2019052907541954443.jpg",
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1481540776,4222990614&fm=26&gp=0.jpg",
@@ -163,130 +168,131 @@ public class AdminOperationController {
         }
         return ResultVOUtil.success();
     }
-    
+
     private static SimpleDateFormat yMd = new SimpleDateFormat("yyyy-MM-dd");
-    private ResultVO fkPublic(Order order) throws Exception{
-    	//计算下单点  对于echarts的时间
-    	Date d = order.getCreateTime();
-        Echarts begin = echartsService.findByCreateTime(getTime(d,26));
-        
-        double s = subtract(order.getOfinal(),begin.getPrice());//投注点与终点距离
-        double runTime = Math.floor(divide(Double.valueOf(abs(s)),0.0003));//能够执行几次
+
+    private ResultVO fkPublic(Order order) throws Exception {
+        //计算下单点  对于echarts的时间
+        Date d = order.getCreateTime();
+        Echarts begin = echartsService.findByCreateTime(getTime(d, 26));
+
+        double s = subtract(order.getOfinal(), begin.getPrice());//投注点与终点距离
+        double runTime = Math.floor(divide(Double.valueOf(abs(s)), 0.0003));//能够执行几次
         double tmp = Double.valueOf(begin.getPrice());//起始值
-        double vg = s>0?0.0005:-0.0005;//每次的增减量
+        double vg = s > 0 ? 0.0005 : -0.0005;//每次的增减量
         double[] pricesArray = new double[24];
         String[] timeArrayEcharts = new String[24];//曲线时间
         int arrayIndex = 0;
-        if(runTime<3){
+        if (runTime < 3) {
             for (int i = 1; i <= 3; i++) {
-                tmp = i<3?(subtract(tmp,vg)):(add(tmp,vg));
-                pricesArray[arrayIndex]=tmp;
-                timeArrayEcharts[arrayIndex] = getTime(d,26+i);
+                tmp = i < 3 ? (subtract(tmp, vg)) : (add(tmp, vg));
+                pricesArray[arrayIndex] = tmp;
+                timeArrayEcharts[arrayIndex] = getTime(d, 26 + i);
                 arrayIndex++;
             }
             //System.out.println("模式1：s="+s+"runtime="+runTime);
-        }else if(runTime<4){
+        } else if (runTime < 4) {
             for (int i = 1; i <= 3; i++) {
-                if(i==1){
-                    tmp = add(tmp,vg);
-                }else {
-                    if(i==2){
-                        vg = divide(add(s,vg),3);//获取接下来的平均值
+                if (i == 1) {
+                    tmp = add(tmp, vg);
+                } else {
+                    if (i == 2) {
+                        vg = divide(add(s, vg), 3);//获取接下来的平均值
                     }
-                    tmp = add(tmp,vg);
+                    tmp = add(tmp, vg);
                 }
-                pricesArray[arrayIndex]=tmp;
-                timeArrayEcharts[arrayIndex] = getTime(d,26+i);
+                pricesArray[arrayIndex] = tmp;
+                timeArrayEcharts[arrayIndex] = getTime(d, 26 + i);
                 arrayIndex++;
             }
             //System.out.println("模式2：s="+s+"runtime="+runTime);
-        }else {
-        	//ofinal 需要重新赋值   要在ofinl到index之间
-        	if(runTime>5){
-        		if(Double.valueOf(order.getOfinal())>Double.valueOf(order.getOindex())){
-        			order.setOfinal(add(order.getOindex(), "0.0003")+"");
-            	}else {
-            		order.setOfinal(subtract(order.getOindex(), "0.0003")+"");
-    			}
-        		s = subtract(order.getOfinal(),begin.getPrice());
-        	}
-            vg = divide(s,4);
+        } else {
+            //ofinal 需要重新赋值   要在ofinl到index之间
+            if (runTime > 5) {
+                if (Double.valueOf(order.getOfinal()) > Double.valueOf(order.getOindex())) {
+                    order.setOfinal(add(order.getOindex(), "0.0003") + "");
+                } else {
+                    order.setOfinal(subtract(order.getOindex(), "0.0003") + "");
+                }
+                s = subtract(order.getOfinal(), begin.getPrice());
+            }
+            vg = divide(s, 4);
             for (int i = 1; i <= 3; i++) {
-                tmp = add(tmp,vg);
-                pricesArray[arrayIndex]=tmp;
-                timeArrayEcharts[arrayIndex] = getTime(d,26+i);
+                tmp = add(tmp, vg);
+                pricesArray[arrayIndex] = tmp;
+                timeArrayEcharts[arrayIndex] = getTime(d, 26 + i);
                 arrayIndex++;
             }
-           // System.out.println("模式1：3="+s+"runtime="+runTime);
+            // System.out.println("模式1：3="+s+"runtime="+runTime);
         }
         tmp = Double.valueOf(order.getOfinal());
-        pricesArray[arrayIndex]=tmp;
-        timeArrayEcharts[arrayIndex] = getTime(d,30);
+        pricesArray[arrayIndex] = tmp;
+        timeArrayEcharts[arrayIndex] = getTime(d, 30);
         arrayIndex++;
-        Echarts end = echartsService.findByCreateTime(getTime(d,35));
-        int j=1;
+        Echarts end = echartsService.findByCreateTime(getTime(d, 35));
+        int j = 1;
         boolean idLow = false;//2个点以后是否  小于0.0009
-		boolean find = false;
+        boolean find = false;
         for (int i = 1; i <= 4; i++) {
-        	if(i==1){//对过度点过大做一个调整
-        		if(vg<-0.0005){
-        			vg = -0.0004;
-        		}else if(vg>0.0005){
-        			vg = 0.0004;
-        		}
-        	}
-        	if(i==3){//过度2个点
-				s = subtract( end.getPrice(),tmp+"");
-				if(abs(s)>0.0015){//大于15重新找点
-					//System.out.println("大于15重新找点");
-					for(;j<=15;j++){
-						Echarts echarts = echartsService.findByCreateTime(getTime(d,35+j));
-						vg = divide(abs(subtract(echarts.getPrice(),tmp+"")), (3+j));
-						//System.out.println("vg1："+vg);
-						if(vg>0.0005){//平均值大于4  再找
-							continue;
-						}else {//否则就取这个点
-							s = subtract(echarts.getPrice(),tmp+"");
-							vg = divide(s, (3+j));
-							//System.out.println("vg2："+vg);
-							find = true;
-							break;
-						}
-					}
-				}else if(abs(s)<0.0009){
-					idLow = true;
-				}
-				if(!find){
-					vg = divide(s,3);
-				}
-			}
-        	if(idLow){
-        		if(i==3){
-        			vg = vg>0?0.0004:-0.0004; 
-        		}else {
-        			vg = divide(add(s, vg),2);
-				}
-        	}
-        	tmp = add(tmp,vg);
-            pricesArray[arrayIndex]=tmp;
-            timeArrayEcharts[arrayIndex] = getTime(d,30+i);
+            if (i == 1) {//对过度点过大做一个调整
+                if (vg < -0.0005) {
+                    vg = -0.0004;
+                } else if (vg > 0.0005) {
+                    vg = 0.0004;
+                }
+            }
+            if (i == 3) {//过度2个点
+                s = subtract(end.getPrice(), tmp + "");
+                if (abs(s) > 0.0015) {//大于15重新找点
+                    //System.out.println("大于15重新找点");
+                    for (; j <= 15; j++) {
+                        Echarts echarts = echartsService.findByCreateTime(getTime(d, 35 + j));
+                        vg = divide(abs(subtract(echarts.getPrice(), tmp + "")), (3 + j));
+                        //System.out.println("vg1："+vg);
+                        if (vg > 0.0005) {//平均值大于4  再找
+                            continue;
+                        } else {//否则就取这个点
+                            s = subtract(echarts.getPrice(), tmp + "");
+                            vg = divide(s, (3 + j));
+                            //System.out.println("vg2："+vg);
+                            find = true;
+                            break;
+                        }
+                    }
+                } else if (abs(s) < 0.0009) {
+                    idLow = true;
+                }
+                if (!find) {
+                    vg = divide(s, 3);
+                }
+            }
+            if (idLow) {
+                if (i == 3) {
+                    vg = vg > 0 ? 0.0004 : -0.0004;
+                } else {
+                    vg = divide(add(s, vg), 2);
+                }
+            }
+            tmp = add(tmp, vg);
+            pricesArray[arrayIndex] = tmp;
+            timeArrayEcharts[arrayIndex] = getTime(d, 30 + i);
             arrayIndex++;
         }
-        if(find){//需要扩充点  35以后的点（包括35）
-        	int xb = 0;
-        	for(;j>0;j--){
-        		tmp = add(tmp,vg);
-           	 	pricesArray[arrayIndex]=tmp;
-           	 	timeArrayEcharts[arrayIndex] = getTime(d,35+xb++);
-           	 	arrayIndex++;
-        	}
+        if (find) {//需要扩充点  35以后的点（包括35）
+            int xb = 0;
+            for (; j > 0; j--) {
+                tmp = add(tmp, vg);
+                pricesArray[arrayIndex] = tmp;
+                timeArrayEcharts[arrayIndex] = getTime(d, 35 + xb++);
+                arrayIndex++;
+            }
         }
-        for(int i=0;i<pricesArray.length;i++){
-        	if(pricesArray[i]!=0){//去掉未赋值的
+        for (int i = 0; i < pricesArray.length; i++) {
+            if (pricesArray[i] != 0) {//去掉未赋值的
                 echartsService.updPriceAndLockByTime(df.format(pricesArray[i]), timeArrayEcharts[i].toString());
                 //订单信息
-                orderService.changeOrders(timeArrayEcharts[i].toString(), pricesArray[i]+"");
-        	}
+                orderService.changeOrders(timeArrayEcharts[i].toString(), pricesArray[i] + "");
+            }
         }
         Integer result = orderService.saveResult(df.format(Double.valueOf(order.getOfinal())), order.getResult(), "1", order.getOid().toString());
         if (result < 0) {
@@ -297,6 +303,7 @@ public class AdminOperationController {
 
     /**
      * 设置赢
+     *
      * @param oid
      * @return
      */
@@ -311,33 +318,33 @@ public class AdminOperationController {
         boolean isRepear = true;//是否需要改点
         Echarts echarts30 = echartsService.findByCreateTime(getTime(order.getCreateTime(), 30));
         if (order.getDirection().equals("看涨")) {
-        	if(Double.valueOf(echarts30.getPrice())>Double.valueOf(order.getOindex())){
-        		order.setOfinal(echarts30.getPrice());
-        		isRepear = false;
-        	}else {
-                order.setOfinal(add(order.getOindex(), rOfinal>=10?("0.00"+rOfinal):("0.000"+rOfinal))+"");
-			}
+            if (Double.valueOf(echarts30.getPrice()) > Double.valueOf(order.getOindex())) {
+                order.setOfinal(echarts30.getPrice());
+                isRepear = false;
+            } else {
+                order.setOfinal(add(order.getOindex(), rOfinal >= 10 ? ("0.00" + rOfinal) : ("0.000" + rOfinal)) + "");
+            }
         }
         if (order.getDirection().equals("看跌")) {
-        	if(Double.valueOf(echarts30.getPrice())<Double.valueOf(order.getOindex())){
-        		order.setOfinal(echarts30.getPrice());
-        		isRepear = false;
-        	}else {
-        		order.setOfinal(subtract(order.getOindex(),rOfinal>=10?("0.00"+rOfinal):("0.000"+rOfinal))+"");
-			}
+            if (Double.valueOf(echarts30.getPrice()) < Double.valueOf(order.getOindex())) {
+                order.setOfinal(echarts30.getPrice());
+                isRepear = false;
+            } else {
+                order.setOfinal(subtract(order.getOindex(), rOfinal >= 10 ? ("0.00" + rOfinal) : ("0.000" + rOfinal)) + "");
+            }
         }
         ResultVO vo = null;
-		try {
-			if(isRepear){
-				vo = fkPublic(order);
-				order = orderService.findByOid(oid);
-			}else {
-				orderService.saveResult(df.format(Double.valueOf(order.getOfinal())), order.getResult(), "1", order.getOid().toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        if(vo!=null)
+        try {
+            if (isRepear) {
+                vo = fkPublic(order);
+                order = orderService.findByOid(oid);
+            } else {
+                orderService.saveResult(df.format(Double.valueOf(order.getOfinal())), order.getResult(), "1", order.getOid().toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (vo != null)
             return vo;
         //加余额
         Temp temp = new Temp();
@@ -357,51 +364,57 @@ public class AdminOperationController {
 
     /**
      * 设置输
+     *
      * @param oid
      * @return
      */
     @PostMapping("/down/{oid}")
     public ResultVO down(@PathVariable("oid") Integer oid) {
+        return editOrder(oid);
+    }
+
+
+    public ResultVO editOrder(Integer oid) {
         Order order = orderService.findByOid(oid);
         if (new Date().getTime() - 30 * 1000 > order.getCreateTime().getTime()) {
             return ResultVOUtil.error(-1, "超过30秒");
         }
         order.setResult("亏");
-        int rOfinal = RandomUtil.getRandomBet(8, 15); 
+        int rOfinal = RandomUtil.getRandomBet(8, 15);
         boolean isRepear = true;//是否需要改点
         Echarts echarts30 = echartsService.findByCreateTime(getTime(order.getCreateTime(), 30));
         if (order.getDirection().equals("看涨")) {
-        	if(Double.valueOf(echarts30.getPrice())<Double.valueOf(order.getOindex())){
-        		order.setOfinal(echarts30.getPrice());
-        		isRepear = false;
-        	}else{
-        		order.setOfinal(subtract(order.getOindex(),rOfinal>=10?("0.00"+rOfinal):("0.000"+rOfinal))+"");
-        	}
+            if (Double.valueOf(echarts30.getPrice()) < Double.valueOf(order.getOindex())) {
+                order.setOfinal(echarts30.getPrice());
+                isRepear = false;
+            } else {
+                order.setOfinal(subtract(order.getOindex(), rOfinal >= 10 ? ("0.00" + rOfinal) : ("0.000" + rOfinal)) + "");
+            }
         }
         if (order.getDirection().equals("看跌")) {
-        	if(Double.valueOf(echarts30.getPrice())>Double.valueOf(order.getOindex())){
-        		order.setOfinal(echarts30.getPrice());
-        		isRepear = false;
-        	}else {
-        		order.setOfinal(add(order.getOindex(), rOfinal>=10?("0.00"+rOfinal):("0.000"+rOfinal))+"");
-			}
+            if (Double.valueOf(echarts30.getPrice()) > Double.valueOf(order.getOindex())) {
+                order.setOfinal(echarts30.getPrice());
+                isRepear = false;
+            } else {
+                order.setOfinal(add(order.getOindex(), rOfinal >= 10 ? ("0.00" + rOfinal) : ("0.000" + rOfinal)) + "");
+            }
         }
         ResultVO vo = null;
-		try {
-			if(isRepear){
-				vo = fkPublic(order);
-				order = orderService.findByOid(oid);
-			}else {
-				orderService.saveResult(df.format(Double.valueOf(order.getOfinal())), order.getResult(), "1", order.getOid().toString());
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-        if(vo!=null)
+        try {
+            if (isRepear) {
+                vo = fkPublic(order);
+                order = orderService.findByOid(oid);
+            } else {
+                orderService.saveResult(df.format(Double.valueOf(order.getOfinal())), order.getResult(), "1", order.getOid().toString());
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        if (vo != null)
             return vo;
         //减掉余额
-       // List<Temp> temps = tempService.findByTOpenid(order.getOpenid());
-        List<Temp> temps = tempService.findByTOpenidAndOrderid(order.getOpenid(),oid+"");
+        // List<Temp> temps = tempService.findByTOpenid(order.getOpenid());
+        List<Temp> temps = tempService.findByTOpenidAndOrderid(order.getOpenid(), oid + "");
         if (null == temps || temps.size() == 0) {
             return ResultVOUtil.error(ResultEnum.UPDATE_ORDER_ERROR.getCode(), ResultEnum.UPDATE_ORDER_ERROR.getMsg());
         }
@@ -453,6 +466,7 @@ public class AdminOperationController {
      */
     @GetMapping("/setEchartsDatas")
     @ResponseBody
+    @PostConstruct
     public String setEchartsData() {
         DecimalFormat df = new DecimalFormat("#.0000");
         if (EchartsConst == 0) {
@@ -496,6 +510,7 @@ public class AdminOperationController {
      */
     @GetMapping("/setOrderDatas")
     @ResponseBody
+    @PostConstruct
     public String setOrderDatas() {
         if (OrderConst == 0) {
             new Thread(new Runnable() {
@@ -521,6 +536,45 @@ public class AdminOperationController {
         return "ok";
     }
 
+
+    @GetMapping("/x")
+    @ResponseBody
+    public @PostConstruct
+    void autoEditOrder() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Timer timer = new Timer(true);
+                timer.schedule(new TimerTask() {
+                    public void run() {
+                        if (updConst == 0) {
+                            List<Order> toBeRevised = orderService.findToBeRevised();
+                            if (toBeRevised.size() != 0) {
+                                toBeRevised.forEach(order -> {
+                                    editOrder(order.getOid());
+                                });
+                            }
+                        }
+                    }
+                }, 1000, 10 * 1000);
+            }
+        }).start();
+    }
+
+
+    @GetMapping("/updOn")
+    @ResponseBody
+    public String updOn() {
+        updConst = 0;
+        return "ok";
+    }
+
+    @GetMapping("/updOff")
+    @ResponseBody
+    public String updOff() {
+        updConst = 1;
+        return "ok";
+    }
 
     @GetMapping("/disorderSequence")
     @ResponseBody
@@ -595,14 +649,14 @@ public class AdminOperationController {
         return ResultVOUtil.success();
     }
 
-    @GetMapping("/rhyme")
-    @ResponseBody
-    public ResultVO grh() {
-        List<Balance> all = balanceService.findAll();
-        Map<String, Object> map = new HashMap<>();
-        map.put("all", all);
-        return ResultVOUtil.success(map);
-    }
+//    @GetMapping("/rhyme")
+//    @ResponseBody
+//    public ResultVO grh() {
+//        List<Balance> all = balanceService.findAll();
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("all", all);
+//        return ResultVOUtil.success(map);
+//    }
 
     @PostMapping("/search/{uName}")
     public ResultVO search(@PathVariable("uName") String uName, Map<String, Object> map) {
@@ -627,6 +681,61 @@ public class AdminOperationController {
             return "ok";
         }
         return "设置失败";
+    }
+
+
+    @PostMapping("/setReturnUrl")
+    @ResponseBody
+    public String setReturnUrl(@RequestParam(value = "url", required = false) String url) {
+        if (url == "" || url == null) {
+//            int i = tipService.updTip("");
+            return "不能设置为空";
+        }
+        int i = tipService.updReturnUrl(url);
+        if (i > 0) {
+            return "ok";
+        }
+        return "设置失败";
+    }
+
+
+    @PostMapping("/setOrderMoney")
+    @ResponseBody
+    public String setOrderMoney(@RequestParam(value = "str", required = false) String str) {
+        if (str == "" || str == null) {
+            return "不能设置为空";
+        }
+        int i = tipService.setOrderMoeny(str);
+        if (i > 0) {
+            return "ok";
+        }
+        return "设置失败";
+    }
+
+    @PostMapping("/setRechargeMoney")
+    @ResponseBody
+    public String setRechargeMoney(@RequestParam(value = "str", required = false) String str) {
+        if (str == "" || str == null) {
+            return "不能设置为空";
+        }
+        int i = tipService.setRechargeMoeny(str);
+        if (i > 0) {
+            return "ok";
+        }
+        return "设置失败";
+    }
+
+
+    @GetMapping("/trueMaintain")
+    public String trueMaintain() {
+        tipService.setIfMaintain(true);
+        return "ok";
+    }
+
+    @GetMapping("/falseMaintain")
+    public String falseMaintain() {
+        tipService.setIfMaintain(false);
+        return "ok";
     }
 
 }

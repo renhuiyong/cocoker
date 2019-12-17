@@ -2,10 +2,12 @@ $('.history').click(function () {
     window.location.href='/cocoker/history?openid='+ getCookie('openid');
 });
 $('.entry').click(function () {
-    window.location.href='/cocoker/entry';
+    $('#showMe9').click();
+    // window.location.href='/cocoker/entry';
 });
 $('.modelinfo').click(function () {
-    window.location.href='/cocoker/modelinfo';
+    $('#showMe9').click();
+    // window.location.href='/cocoker/modelinfo';
 });
 $('.novicetips').click(function () {
     window.location.href='/cocoker/novicetips';

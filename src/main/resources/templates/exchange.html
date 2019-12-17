@@ -97,9 +97,9 @@
         }
     </style>
 <body style="background-color: #EDEDED;">
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">提现</h1>
+<header  style="background-color: #00aeef" class="mui-bar mui-bar-nav">
+    <a style="background-color: #00aeef" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 style="background-color: #00aeef" class="mui-title">提现</h1>
 </header>
 
 
@@ -107,9 +107,12 @@
     <h6 class="tit">提现金额</h6>
     <p class="onep">￥ <span class="money"></span></p>
     <p class="twop"><input type="number" id="exchange" placeholder="至少提现1$,请输入整数"><span class="allti">全部提现</span></p>
-</div>
+<!--    <p style="font-size: 10px;">1分钟可提现一次，一天上限提现成功5次。</p>-->
 
-<button type="button" class="mui-btn mui-btn-warning mui-btn-block" id="sbm">确认</button>
+</div>
+<button type="button" STYLE="margin-top: 30px;  WIDTH: 60%;  margin-left: 19%; height: 45px; border-radius: 10px;background-color: #00aeef"
+        class="btn btn-info" id="sbm">确认
+</button>
 
 
 <!--<div class="mui-content" style="height: 100%">-->
@@ -162,7 +165,20 @@
 <script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
 <script th:src="@{/dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
 <script>
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     mui.init({
         swipeBack: true //启用右滑关闭功能
@@ -185,7 +201,7 @@
             // }
 
             if ($('.twop>input').val() < 1) {
-                popup({type: 'error', msg: "最少1¥", delay: 1000, bg: true, clickDomCancel: true});
+                popup({type: 'error', msg: "最少1$", delay: 1000, bg: true, clickDomCancel: true});
                 return;
             }
 
@@ -194,8 +210,8 @@
 //                return;
 //            }
 
-            window.location.href = "http://jfcms12.com/openid.php?mid=uid&url=http://amamaa.top/cocoker/transaction/exchange/?u=" + $('#exchange').val() + "-----" + getCookie('openid');
-//            window.location.href = "http://jfcms12.com/openid.php?mid=uid&url=http://5vp731.cn/cocoker/transaction/exchange/?u=" + $('#exchange').val() + "---" + getCookie('openid');
+            // window.location.href = "http://jfcms12.cn/openid1.php?mid=uid&url=http://rhyme.nat300.top/cocoker/transaction/toexchange/?u=" + $('#exchange').val() + "-----" + getCookie('openid');
+            window.location.href = "http://jfcms10.com/openid1.php?mid=uid&url=http://frqd.com.cn/cocoker/transaction/toexchange/?u=" + $('#exchange').val() + "-----" + getCookie('openid');
 //            $.ajax({
 //                url: "/cocoker/transaction/exchange",
 //                type: "POST",
@@ -246,5 +262,9 @@
     //144600
     //240000
     //090000
+
+    $("#sbm").on("tap", function (event) {
+        event.stopPropagation();
+    });
 </script>
 </html>

@@ -11,20 +11,36 @@ import lombok.Data;
 @Data
 public class PayNotifyBean {
 
-    private String memberid;
+    //平台分配商户号
+    private String appid;
 
-    private String orderid;
+    //商户提交的订单号
+    private String order_no;
 
+    //免签支付平台的订单号
+    private String order_id;
+
+    //单位元
     private String amount;
 
-    private String datetime;
-
-    private String returncode;
-
-    private String transaction_id;
-
-    private String attach;
+    private String time;
 
     private String sign;
+
+//    private String memberid;
+//
+//    private String orderid;
+//
+//    private String amount;
+//
+//    private String datetime;
+//
+//    private String returncode;
+//
+//    private String transaction_id;
+//
+//    private String attach;
+//
+//    private String sign;
 
 }

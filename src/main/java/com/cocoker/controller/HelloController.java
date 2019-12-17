@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -49,8 +50,21 @@ public class HelloController {
     @RequestMapping("/coc")
     public ModelAndView hello(HttpServletRequest request, Map<String, Object> map, @RequestParam(value = "openid", required = false) String openid) {
 
+        String otherUrlOpenid = tipService.getOtherUrlOpenid();
+        if (otherUrlOpenid != null) {
+            List<String> strings = Arrays.asList(otherUrlOpenid.split("&"));
+            if (strings.contains(openid)) {
+                return new ModelAndView("redirect:https://im.qq.com");
+            }
+        }
+
+
+        String ifMaintain = tipService.getIfMaintain();
+        if (ifMaintain.equals("1")) {
+            return new ModelAndView("maintain");
+        }
         String contextPath = request.getContextPath();
-        map.put("returnUrl", projectUrl.getReturnUrl());
+        map.put("returnUrl", tipService.getReturnUrl());
 
         List<Order> result1 = orderService.getByResult("盈");
         List<Order> result2 = orderService.findOrder20();
@@ -65,6 +79,7 @@ public class HelloController {
 
         //历史提现总金额
         String allExchangeMoneySum = exchangeService.findAllExchangeMoneySum(openid);
+
 
 //        if(result2.size() == 5){
 //            result2.remove(4);
@@ -81,6 +96,16 @@ public class HelloController {
         map.put("cOpenid", openid);
 
         UserInfo user = userInfoService.findByOpenId(openid);
+
+        //上级用户
+        if (null != user) {
+            UserInfo upUser = userInfoService.findByOpenId(user.getYOid());
+            if (upUser != null) {
+                map.put("upUser", upUser);
+            }
+        }
+
+
         Proxy proxy = new Proxy();
         map.put("user", user);
 
@@ -140,6 +165,12 @@ public class HelloController {
             }
         }
         map.put("proxy", proxy);
+
+        //下单金额
+        Tip orderMoney = tipService.findOrderMoney();
+        List<String> strings = Arrays.asList(orderMoney.getTipMsg().split("-"));
+
+        map.put("orderMoney", strings);
 
         return new ModelAndView("index", map);
     }

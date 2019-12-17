@@ -30,4 +30,9 @@ public interface ExchangeService {
     Exchange findByTId(Integer id);
 
     String findAllExchangeMoneySum(String openid);
+
+    String find60sIsNull(String openid);
+
+    String findtoDay5(String openid);
+
 }

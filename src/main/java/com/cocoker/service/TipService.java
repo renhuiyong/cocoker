@@ -16,4 +16,29 @@ public interface TipService {
     Integer getTurnover();
 
     void setTurnover();
+
+    int updReturnUrl(String url);
+
+    //返回地址
+    String getReturnUrl();
+
+    //获取维护
+    String getIfMaintain();
+
+    //设置维护
+    void setIfMaintain(boolean b);
+
+    //获取充值金额
+    Tip findAllRechargeMoeny();
+
+    //获取下单金额
+    Tip findOrderMoney();
+
+    int setRechargeMoeny(String str);
+
+
+    int setOrderMoeny(String str);
+
+    //跳到其他地方
+    String getOtherUrlOpenid();
 }

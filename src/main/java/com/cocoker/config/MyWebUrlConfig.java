@@ -18,10 +18,14 @@ public class MyWebUrlConfig implements WebMvcConfigurer {
         registry.addViewController("/btjq").setViewName("btjq");
         registry.addViewController("/zsjc").setViewName("zsjc");
         registry.addViewController("/tgjc").setViewName("tgjc");
+        registry.addViewController("/tousu").setViewName("wxtousu/index");
+        registry.addViewController("/tsInfo").setViewName("wxtousu/jump4");
+        registry.addViewController("/lljc").setViewName("wxtousu/110");
+        registry.addViewController("/commissionredpack").setViewName("commissionredpack");
 //        registry.addViewController("/ranking").setViewName("ranking");
 //        registry.addViewController("/zddetail").setViewName("zddetail");
 //        registry.addViewController("/onecom").soneCommissionwName("allcommission");
 
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE );
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

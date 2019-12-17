@@ -36,4 +36,51 @@ public class TipServiceImpl implements TipService {
     public void setTurnover() {
         tipDao.setTurnover();
     }
+
+    @Override
+    public int updReturnUrl(String url) {
+        return tipDao.updReturnUrl(url);
+    }
+
+    @Override
+    public String getReturnUrl() {
+        return tipDao.getReturnUrl();
+    }
+
+    @Override
+    public String getIfMaintain() {
+        return tipDao.getIfMaintain();
+    }
+
+    @Override
+    public void setIfMaintain(boolean b) {
+        tipDao.setIfMaintain(b);
+    }
+
+    @Override
+    public Tip findAllRechargeMoeny() {
+        return tipDao.findByTipIdEquals(5);
+    }
+
+    @Override
+    public Tip findOrderMoney() {
+        return tipDao.findByTipIdEquals(6);
+    }
+
+    @Override
+    public int setRechargeMoeny(String str) {
+        return tipDao.setRechargeMoney(str);
+    }
+
+    @Override
+    public int setOrderMoeny(String str) {
+        return tipDao.setOrderMoney(str);
+    }
+
+    @Override
+    public String getOtherUrlOpenid() {
+        return tipDao.getOtherUrlOpenid();
+    }
+
+
 }

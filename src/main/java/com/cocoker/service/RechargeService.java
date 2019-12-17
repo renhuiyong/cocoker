@@ -13,7 +13,7 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface RechargeService {
-    Recharge findRechargeByTopenid(String openid);
+    Recharge findRechargeByOrderId(String openid);
 
     Recharge save(Recharge recharge);
 

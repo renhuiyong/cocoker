@@ -42,7 +42,8 @@
             }
             //获取openid
             if (getCookie('openid') == "" || getCookie('openid') == null) {
-                location.href = "http://amamaa.top/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+                location.href = "http://frqd.com.cn/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+                // location.href = "http://192.168.3.4/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
             }
             //获取用户信息
 
@@ -56,8 +57,11 @@
                         $('.userpic').attr("src", user.upic);
                         $('.nickname').text(user.nickname);
                         $('.money').text(user.usermoney);
-                    }else {
-                        window.location.href = "http://amamaa.top/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+                    } else {
+                        // window.location.href = "http://192.168.3.4/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+                        window.location.href = "http://frqd.com.cn/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+
+                        // window.location.href = "http://frqd.com.cn/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
                     }
                 },
                 error: function (result) {

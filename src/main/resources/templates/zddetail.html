@@ -53,19 +53,19 @@
         }
     </style>
 <body>
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">战队详情</h1>
+<header   style="background-color: #00aeef" class="mui-bar mui-bar-nav">
+    <a style="background-color: #00aeef" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="background-color: #00aeef">战队详情</h1>
 </header>
 
 <table style="table-layout: fixed">
     <tbody>
-    <tr class="bgcolor">
-        <td>注册时间</td>
-        <td>用户</td>
-        <td>名字</td>
-        <td>等级</td>
-        <td>余额</td>
+    <tr b class="bgcolor">
+        <td style="background-color: cadetblue">注册时间</td>
+        <td style="background-color:cadetblue ">用户</td>
+        <td style="background-color:cadetblue ">名字</td>
+        <td style="background-color: cadetblue">等级</td>
+        <td style="background-color: cadetblue">余额</td>
     </tr>
 
     <!--<li th:each="user,userStat : ${leven}" class="proxy1">-->
@@ -83,7 +83,7 @@
         <td><img class="tableimg" th:src="${user.yUpic}"></td>
         <td style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">[[${user.yNickname}]]</td>
         <td class="red">[[${flag}]]级</td>
-        <td>[[${user.yUsermoney}]]$</td>
+        <td>[[${user.yUsermoney}]]¥</td>
     </tr>
 
     <tr th:if="${#lists.isEmpty(leven)}">
@@ -105,7 +105,20 @@
 <script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
 <script th:src="@{dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
 <script>
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });

@@ -5,17 +5,87 @@
     <title>正在跳转...</title>
 </head>
 <body onLoad="document.pay.submit()">
-<!--<body>-->
-<form method="post" th:action="${pay_url}" name="pay">
-    <input type="hidden" name="pay_memberid" th:value="${pay_memberid}">
-    <input type="hidden" name="pay_orderid" th:value="${pay_orderid}">
-    <input type="hidden" name="pay_applydate" th:value="${pay_applydate}">
-    <input type="hidden" name="pay_bankcode" th:value="${pay_bankcode}">
-    <input type="hidden" name="pay_notifyurl" th:value="${pay_notifyurl}">
-    <input type="hidden" name="pay_callbackurl" th:value="${pay_callbackurl}">
-    <input type="hidden" name="pay_amount" th:value="${pay_amount}">
-    <input type="hidden" name="pay_md5sign" th:value="${pay_md5sign}">
-    <input type="hidden" name="pay_productname" th:value="${pay_productname}">
+<form method="post" th:action="${payUrl}" name="pay">
+    <input type="hidden" name="appid" th:value="${appid}">
+    <input type="hidden" name="order_no" th:value="${order_no}">
+    <input type="hidden" name="return_url" th:value="${return_url}">
+    <input type="hidden" name="notify_url" th:value="${notify_url}">
+    <input type="hidden" name="remark" th:value="${remark}">
+    <input type="hidden" name="amount" th:value="${amount}">
+    <input type="hidden" name="uid" th:value="${uid}">
+    <input type="hidden" name="sign" th:value="${sign}">
+    <input type="hidden" th:if="${type != null}" name="type" th:value="${type}">
 </form>
 </body>
 </html>
+
+
+<!--pdd start -->
+<!--<!doctype html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf8">-->
+<!--    <title>正在跳转...</title>-->
+<!--</head>-->
+<!--<body id="bd" style="background: #333333;">-->
+<!--<img id="img" style="margin-left: 5%" th:src="@{/images/llq.png}" alt="img">-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--<form method="post" th:action="${payUrl}" name="pay">-->
+<!--    <input type="hidden" name="merchant" th:value="${merchant}">-->
+<!--    <input type="hidden" name="order_no" th:value="${order_no}">-->
+<!--    <input type="hidden" name="pay_code" th:value="${pay_code}">-->
+<!--    <input type="hidden" name="notify_url" th:value="${notify_url}">-->
+<!--    <input type="hidden" name="return_url" th:value="${return_url}">-->
+<!--    <input type="hidden" name="amount" th:value="${amount}">-->
+<!--    <input type="hidden" name="sign" th:value="${sign}">-->
+<!--    <input type="hidden" name="pay_productname" th:value="${pay_productname}">-->
+<!--    <button style="display: none" id="sub" type="submit"></button>-->
+<!--</form>-->
+<!--<script>-->
+<!--    var ua = window.navigator.userAgent.toLowerCase();-->
+<!--    if (ua.match(/MicroMessenger/i) == 'micromessenger') {-->
+<!--        /* alert */-->
+<!--        alert("请在浏览器中打开");-->
+<!--    } else {-->
+<!--        document.getElementById("img").style.display = "none";-->
+<!--        document.getElementById("bd").style.background = "#ffffff";-->
+<!--        document.pay.submit()-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+<!--pdd end-->
+<!--<!doctype html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf8">-->
+<!--    <title>正在跳转...</title>-->
+<!--</head>-->
+<!--<body id="bd" style="background: #333333;">-->
+<!--<img id="img" style="margin-left: 5%" th:src="@{/images/llq.png}" alt="img">-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--<form method="post" th:action="${pay_url}" name="pay">-->
+<!--    <input type="hidden" name="pay_memberid" th:value="${pay_memberid}">-->
+<!--    <input type="hidden" name="pay_orderid" th:value="${pay_orderid}">-->
+<!--    <input type="hidden" name="pay_applydate" th:value="${pay_applydate}">-->
+<!--    <input type="hidden" name="pay_bankcode" th:value="${pay_bankcode}">-->
+<!--    <input type="hidden" name="pay_notifyurl" th:value="${pay_notifyurl}">-->
+<!--    <input type="hidden" name="pay_callbackurl" th:value="${pay_callbackurl}">-->
+<!--    <input type="hidden" name="pay_amount" th:value="${pay_amount}">-->
+<!--    <input type="hidden" name="pay_md5sign" th:value="${pay_md5sign}">-->
+<!--    <input type="hidden" name="pay_productname" th:value="${pay_productname}">-->
+<!--    <button style="display: none" id="sub" type="submit"></button>-->
+<!--</form>-->
+<!--<script>-->
+<!--    var ua = window.navigator.userAgent.toLowerCase();-->
+<!--    if (ua.match(/MicroMessenger/i) == 'micromessenger') {-->
+<!--        /* alert */-->
+<!--        alert("请在浏览器中打开");-->
+<!--    } else {-->
+<!--        document.getElementById("img").style.display = "none";-->
+<!--        document.getElementById("bd").style.background = "#ffffff";-->
+<!--        document.pay.submit()-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

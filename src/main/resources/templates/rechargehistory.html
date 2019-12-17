@@ -51,9 +51,9 @@
     </style>
 <body>
 
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">充值记录</h1>
+<header style="background-color: #00aeef" class="mui-bar mui-bar-nav">
+    <a style="background-color: #00aeef" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 style="background-color: #00aeef" class="mui-title">充值记录</h1>
 </header>
 
 <ul class="mui-table-view">
@@ -79,7 +79,20 @@
 </audio>
 </body>
 <script>
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     mui.init({
         swipeBack: true //启用右滑关闭功能

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>西瓜赢家</title>
+    <title>USDA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -35,6 +35,34 @@
             font-size: 10px !important;
         }
 
+        @keyframes fade {
+            from {
+                opacity: 1.0;
+            }
+            30% {
+                /*opacity: 0.3;*/
+                background: red;
+            }
+            50% {
+                /*opacity: 0.5;*/
+                background: darkblue;
+            }
+            80% {
+                /*opacity: 0.8;*/
+                background: #a6e1ec;
+            }
+            to {
+                opacity: 1.0;
+            }
+        }
+
+        .shanshuo {
+            background: #4caf50;
+            padding: 3px;
+            font-size: 15px;
+            animation: fade 5000ms infinite;
+        }
+
         .userimg80 {
             width: 30% !important;
             height: 30% !important;
@@ -61,7 +89,7 @@
 
         .titright {
             float: right;
-            margin-right: 20px;
+            margin-right: -12px;
             padding-top: 23px;
         }
 
@@ -201,12 +229,13 @@
 
         /*充值*/
         .goumoney {
+            /*position: absolute !important;*/
             width: 90%;
             height: 62%;
             position: fixed;
-            top: 15%;
+            top: 7%;
             left: 5%;
-            background: rgba(0, 0, 21, .7);
+            background: rgba(0, 0, 21, .1);
             z-index: 2;
             display: none;
         }
@@ -253,11 +282,12 @@
         }
 
         .btn-default:hover {
-            background-color: #03a9f4;
+            background-color: #ffc107;
+            color: #1F1F1F !important;
         }
 
         .btndiv button {
-            background-color: rgba(255, 255, 255, .6);
+            background-color: rgba(255, 255, 255, .1);
             color: #fff;
             width: 24%;
             height: 40px;
@@ -534,12 +564,12 @@
 
         .bsuccess {
             margin-left: 2%;
-            background-color: #4DAA90;
+            background-color: #8bc34a;
         }
 
         .bdanger {
             margin-right: 2%;
-            background-color: #C15466;
+            background-color: #f44336;
         }
 
         .mr5px {
@@ -568,7 +598,7 @@
             float: left;
             text-align: left;
             padding-left: 3%;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             height: 40px;
             line-height: 40px;
@@ -663,6 +693,7 @@
         .picss {
             width: 100%;
             text-align: center;
+
         }
 
         .picss > img {
@@ -673,10 +704,19 @@
         }
 
         .picssprev {
-            background: -webkit-linear-gradient(left, #384C70, #4C6694);
-            background: -o-linear-gradient(right, #384C70, #4C6694);
-            background: -moz-linear-gradient(right, #384C70, #4C6694);
-            background: linear-gradient(to right, #384C70, #4C6694);
+            /*background: -webkit-linear-gradient(left, #384C70, #4C6694);*/
+            /*background: -o-linear-gradient(right, #384C70, #4C6694);*/
+            /*background: -moz-linear-gradient(right, #384C70, #4C6694);*/
+            /*background: linear-gradient(to right, #384C70, #4C6694);*/
+            background-color: #795a96;
+        }
+
+        .picssprev2 {
+            /*background: -webkit-linear-gradient(left, #384C70, #4C6694);*/
+            /*background: -o-linear-gradient(right, #384C70, #4C6694);*/
+            /*background: -moz-linear-gradient(right, #384C70, #4C6694);*/
+            /*background: linear-gradient(to right, #384C70, #4C6694);*/
+            background-color: #383232;
         }
 
         .mui-icon-extra {
@@ -731,6 +771,19 @@
             letter-spacing: 2px;
         }
 
+        .rightph3 {
+            position: fixed;
+            right: 0;
+            bottom: 45%;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 10px 0 0 10px;
+            padding-left: 10px;
+            z-index: 9999;
+            width: 20%;
+            letter-spacing: 2px;
+        }
+
         .second {
             position: absolute;
             top: 45%;
@@ -749,7 +802,7 @@
             background-color: #D14B65;
         }
 
-        .4
+        /*.4*/
         DAA90 {
             background-color: #4DAA90;
         }
@@ -764,15 +817,15 @@
         <span class="iconfont icon-jiaoyizonglan"></span>
         <p>交易</p>
     </a>
-    <a class="mui-tab-item newfooter" data-fid="2" href="#tabbar-with-yaoqing">
-        <!--        <img th:src="@{/images/newimg/homes2.png}">-->
-        <span class="iconfont icon-chaxun"></span>
-        <p>邀请</p>
-    </a>
+    <!--    <a id="yqjm" class="mui-tab-item newfooter yqjm" data-fid="2" href="#tabbar-with-yaoqing">-->
+    <!--        &lt;!&ndash;        <img th:src="@{/images/newimg/homes2.png}">&ndash;&gt;-->
+    <!--        <span class="iconfont icon-chaxun"></span>-->
+    <!--        <p>邀请</p>-->
+    <!--    </a>-->
     <a class="mui-tab-item newfooter" data-fid="3" href="#tabbar-with-chat">
         <!--        <img th:src="@{/images/newimg/homes3.png}">-->
         <span class="iconfont icon-duorenhuiyi"></span>
-        <p>战队</p>
+        <p>邀请</p>
     </a>
     <a class="mui-tab-item newfooter" data-fid="4" href="#tabbar-with-map">
         <!--        <img th:src="@{/images/newimg/homes4.png}">-->
@@ -781,7 +834,14 @@
     </a>
 </nav>
 <div class="mui-content skin">
-    <div id="tabbar" style="overflow: hidden;background: black;" class="mui-control-content mui-active">
+
+    <div id="tabbar" style="overflow: hidden; background-color: #383232;" class="mui-control-content mui-active">
+        <span style="float: right">
+<!--                            <img style="float: right;left: -10px; top: 49px;  position: relative" id="signin" th:src="@{/images/signin.png}" width="50px"-->
+            <!--                                 height="50px" alt="签到">-->
+            <span style=" float: right; font-family: serif; left: -15px; top: 55px; color: red; position: relative;font-size: 14px;"
+                  id="signin">签到</span>
+                            </span>
         <!--1-->
         <div class="headerdiv">
             <!--头像信息金额-->
@@ -806,75 +866,80 @@
         </div>
 
         <div style="width: 100%;height: 60px;">
-            <div style="height: 50px;width: 30%;  margin: 5px 0px 0px 5px; display: inline-block;float: left">
+            <div style="height: 50px;width: 21%;  margin: 5px 0px 0px 5px; display: inline-block;float: left">
                 <div style="height: 20px; width: 91%; margin: 2px 0 0 2px;">
-                    $ 美元指数 USD
+                    $ 美元指数
                 </div>
                 <div style="height: 20px; width: 91%; margin: 2px 0 0 7px;">
                     <span id="c1" style="color: red;font-size: 22px;">6.7952</span>
                 </div>
 
             </div>
-            <div style="height: 50px;width: 63%;  margin: 5px 0px 0px 1px; display: inline-block;float: left">
-                <!--                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">-->
-                <!--                    涨跌值:<span style="color: red"> 0.1253</span>-->
-                <!--                </div>-->
-                <!--                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">-->
-                <!--                    涨跌幅:<span style="color: red"> 0.1253</span>-->
-                <!--                </div>-->
-                <span>成交额 ($)</span>
-                <div id="dataNums" style="width: 100%;height: 100%"></div>
+            <div style="height: 50px;width: 23%;  margin: 5px 0px 0px 1px; display: inline-block;float: left">
+                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">
+                    涨跌值:<span style="color: red"> 0.1253</span>
+                </div>
+                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">
+                    涨跌幅:<span style="color: red"> 0.1253</span>
+                </div>
 
             </div>
-            <!--            <div style="height: 50px;width: 26%;  margin: 5px 0px 0px 3px; display: inline-block;float: left">-->
-            <!--                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">-->
-            <!--                    今开价:<span style="color: red"> 6.79348</span>-->
-            <!--                </div>-->
-            <!--                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">-->
-            <!--                    昨收价:<span style="color: red"> 6.79348</span>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div style="height: 50px;width: 25%;  margin: 5px 0px 0px 4px; display: inline-block;float: left">-->
-            <!--                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">-->
-            <!--                    最高价:<span style="color: red"> 6.8205</span>-->
-            <!--                </div>-->
-            <!--                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">-->
-            <!--                    最低价:<span style="color: red"> 6.7883</span>-->
-            <!--                </div>-->
-            <!--            </div>-->
+            <div style="height: 50px;width: 26%;  margin: 5px 0px 0px 3px; display: inline-block;float: left">
+                <div style="height: 20px; width: 100%;margin: 2px 0 0 1px; font-size: 10px;">
+                    今开价:<span style="color: red"> 6.79348</span>
+                </div>
+                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">
+                    昨收价:<span style="color: red"> 6.79348</span>
+                </div>
+            </div>
+            <div style="height: 50px;width: 25%;  margin: 5px 0px 0px 4px; display: inline-block;float: left">
+                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">
+                    最高价:<span style="color: red"> 6.8905</span>
+                </div>
+                <div style="height: 20px; width: 100%; margin: 2px 0 0 1px; font-size: 10px;">
+                    最低价:<span style="color: red"> 6.7143</span>
+                </div>
+            </div>
 
         </div>
 
-        <div id="dynamic">
-            <p class="dynamicContext"></p>
-            <!--<p class="bg26"><span style="margin-bottom: 5px;">在线：<span class="linenum"></span></span></p>-->
-        </div>
+        <!--        <div id="dynamic">-->
+        <!--            <p class="dynamicContext"></p>-->
+        <!--            &lt;!&ndash;<p class="bg26"><span style="margin-bottom: 5px;">在线：<span class="linenum"></span></span></p>&ndash;&gt;-->
+        <!--        </div>-->
 
         <div id="asd"
              style="color: #985f0d;font-size: 10px; width: 90%; text-align: center; margin: auto;padding-top: 10px;"><span
                 style="color: #985f0d;font-size: 10px;" id="todaydate"></span> &nbsp;&nbsp;指数来源：官方汇率实时数据
         </div>
         <!--购买金额-->
-        <div class="goumoney">
-            <p class="goumoneyp">购买汇率<span class="closex fr">×</span></p>
+        <div class="goumoney" id="movediv">
+            <p class="goumoneyp">购买金额<span class="closex fr">×</span></p>
 
             <div class="mui-content-padded btndiv gnext">
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn">10</button>
-                <button type="button" class="btn btn-default isdefault">20</button>
-                <button type="button" class="btn btn-default">30</button>
-                <button type="button" class="btn btn-default">50</button>
-                <button type="button" class="btn btn-default">100</button>
-                <button type="button" class="btn btn-default">200</button>
-                <button type="button" class="btn btn-default">300</button>
-                <button type="button" class="btn btn-default">500</button>
-                <button type="button" class="btn btn-default">1000</button>
-                <button type="button" class="btn btn-default">1500</button>
-                <button type="button" class="btn btn-default">2000</button>
+                <!--                <button type="button" class="btn btn-default isdefault">30</button>-->
+                <button th:each="money : ${orderMoney}" type="button" class="btn btn-default"
+                        th:text="${money}"></button>
             </div>
+<!--            <button type="button" class="btn btn-default">手动输入</button>-->
+<!--            <input type="number"  class="form-control customNum" placeholder="大于5">-->
+            <!--            <div class="mui-content-padded btndiv gnext">-->
+            <!--                <button type="button" class="btn btn-default isdefault">30</button>-->
+            <!--                <button type="button" class="btn btn-default">50</button>-->
+            <!--                <button type="button" class="btn btn-default">100</button>-->
+            <!--                <button type="button" class="btn btn-default ">200</button>-->
+            <!--                <button type="button" class="btn btn-default">300</button>-->
+            <!--                <button type="button" class="btn btn-default">400</button>-->
+            <!--                <button type="button" class="btn btn-default">500</button>-->
+            <!--                <button type="button" class="btn btn-default">800</button>-->
+            <!--                <button type="button" class="btn btn-default">1000</button>-->
+            <!--                <button type="button" class="btn btn-default">1500</button>-->
+            <!--                <button type="button" class="btn btn-default">2000</button>-->
+            <!--                <button type="button" class="btn btn-default">3000</button>-->
+            <!--            </div>-->
             <div class="jycycle">
             <span class="jcle">购买:
-                <span class="btngou" style="font-size: 18px;"></span>币
+                <span class="btngou" style="font-size: 18px;">0</span>币
             </span>
 
                 <span class="jcle">预计收入:
@@ -911,7 +976,7 @@
         <!--<span class=""> &nbsp;&nbsp;&nbsp;&nbsp;在线：<span class="linenum"></span></span>-->
         <!--</div>-->
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-        <div id="main" style="width: 100%;height:200px;"></div>
+        <div id="main" style="width: 100%;height:250px;padding-top: 20PX;"></div>
         <!--echarts end-->
         <!--交易周期-->
         <div class="jycycle">
@@ -920,10 +985,21 @@
             </span>
 
             <span class="ml10">预计收益:
-<!--                <span class="yjbt">0</span>.00$-->
+                <!--                <span class="yjbt">0</span>.00$-->
                 <span class="yjbt">0</span>$
             </span>
         </div>
+
+
+        <div style="width: 100%;height: 60px;">
+            <div style="height: 50px;width: 100%;  margin: 5px 0px 0px 15%; display: inline-block;float: left">
+                <span>实时成交额 ( $ )</span>
+                <div id="dataNums" style="width: 100%;height: 100%"></div>
+
+            </div>
+        </div>
+
+
         <!--最新订单-->
         <p>
             <span class="newdd addnewdd st1 fl">最新订单</span>
@@ -975,7 +1051,7 @@
     </div>
 
     <!--买涨跌-->
-    <div class="newbtnparent">
+    <div class="newbtnparent" style="background-color:#5a4d4d; ">
         <!--<button style="color: red;border: 1PX solid red" type="button" flag="inc" class="newbtn blockm fg">-->
         <!--<img width="20px;" height="40px" th:src="@{/images/maizhang.png}">-->
         <!--看涨-->
@@ -1003,88 +1079,200 @@
     <div id="tabbar-with-chat" class="mui-control-content skin">
         <!--        排行榜-->
         <div class="rightph picssprev">排行榜</div>
+        <div class="rightph3 picssprev" style="color: #00ff00; font-size: 18px;font-family: cursive;">领红包</div>
         <div class="rightph2 picssprev">&nbsp;客&nbsp;&nbsp;服&nbsp;</div>
 
-        <div class="picssprev">
+        <div class="picssprev2">
+
+            <!--            upUser-->
+            <!--            [[${upUser}]]-->
+            <li th:if="${upUser} != null" class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right" style="margin-left: 10%">
+                    <img class="h35"/>
+                    <img style="border-radius: 50%;" th:src="${upUser.yUpic}" class="h45 ml15"/>
+                    <span>我的上级: <span style="overflow: hidden;  white-space: nowrap;" class="zdnum ml5">[[${upUser.yNickname}]]</span></span>
+                    <!--                    <p class="mui-ellipsis fr pdt10"><span style="display: inline-block;overflow: hidden;  white-space: nowrap; width: 100px !important;" class="zdnum ml5">[[${upUser.yNickname}]]</span></p>-->
+                </a>
+            </li>
+
+
             <div class="picss"><img class="userpic"></div>
             <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
                 <li style="width: 30%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 onecom"><a
                         href="#">
                     <span class="mui-icon-extra mui-icon-extra-gold pl10"><span
                             class="zdnum ml5 historyCommissionByTime">2</span></span>
-                    <div class="pdt10">今日佣金(元)</div>
+                    <div class="pdt10">今日佣金($)</div>
                 </a></li>
                 <li style="width: 30%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 allcom"><a
                         href="#">
                     <span class="mui-icon-extra mui-icon-extra-express pl10"><span
                             class="zdnum ml5 historyCommission">2</span></span>
-                    <div class="pdt10">累计佣金(元)</div>
+                    <div class="pdt10">累计佣金($)</div>
                 </a></li>
                 <li style="width: 30%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                     <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span class="zdnum ml5 proxyCount">0</span></span>
                     <div class="pdt10">战队人数(名)</div>
                 </a></li>
             </ul>
-            <!--            排行-->
-            <ul id="list" class="mui-table-view mui-table-view-chevron zdlist">
 
-                <li leven="1" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <img th:src="@{/images/img/zdph1.png}" class="h35"/>
-                        <img th:src="@{/images/img/zd1.png}" class="h45 ml15"/>
-                        <span class="ml5">大将</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.one}]]</span></p>
+            <span class="tgqr"
+                  style="margin-left: 25%; background: blueviolet;  width: 200px; height: 40px; display: inline-block; border-radius: 25px;  line-height: 40px;  text-align: center;">我要推广</span>
+
+            <hr>
+            <!--      新等级格式      -->
+            <!--            第一行-->
+            <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
+                <li style="width: 30%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                </li>
+                <li leven="1" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 allcom proxyInfo"><a
+                        href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">1级</span></span>
+                    <div class="pdt10">[[${proxy.one}]]</div>
+                </a></li>
+                <li style="width: 30%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"></li>
+            </ul>
+            <!--            第二行-->
+            <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
+                <li leven="2" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">2级</span></span>
+                        <div class="pdt10">[[${proxy.two}]]</div>
                     </a>
                 </li>
-                <li leven="2" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <img th:src="@{/images/img/zdph2.png}" class="h35"/>
-                        <img th:src="@{/images/img/zd2.png}" class="h45 ml15"/>
-                        <span class="ml5">太尉</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.two}]]</span></p>
+                <li leven="3" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">3级</span></span>
+                        <div class="pdt10">[[${proxy.three}]]</div>
                     </a>
                 </li>
-                <li leven="3" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <img th:src="@{/images/img/zdph3.png}" class="h35"/>
-                        <img th:src="@{/images/img/zd3.png}" class="h45 ml15"/>
-                        <span class="ml5">司徒</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.three}]]</span></p>
-                    </a>
-                </li>
-                <li leven="4" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <span class="zdid">4</span>
-                        <img th:src="@{/images/img/zd4.png}" class="h45 ml15"/>
-                        <span class="ml5">司空</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.four}]]</span></p>
-                    </a>
-                </li>
-                <li leven="5" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <span class="zdid">5</span>
-                        <img th:src="@{/images/img/zd5.png}" class="h45 ml15"/>
-                        <span class="ml5">太师</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.five}]]</span></p>
-                    </a>
-                </li>
-                <li leven="6" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <span class="zdid">6</span>
-                        <img th:src="@{/images/img/zd6.png}" class="h45 ml15"/>
-                        <span class="ml5">太傅</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.six}]]</span></p>
-                    </a>
-                </li>
-                <li leven="7" class="mui-table-view-cell mui-media proxyInfo">
-                    <a class="mui-navigate-right">
-                        <span class="zdid">7</span>
-                        <img th:src="@{/images/img/zd7.png}" class="h45 ml15"/>
-                        <span class="ml5">太保</span>
-                        <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.seven}]]</span></p>
+                <li leven="4" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5 ">4级</span></span>
+                        <div class="pdt10">[[${proxy.four}]]</div>
                     </a>
                 </li>
             </ul>
+            <!--第三行-->
+            <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
+                <li leven="5" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">5级</span></span>
+                        <div class="pdt10">[[${proxy.five}]]</div>
+                    </a>
+                </li>
+                <li leven="6" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">6级</span></span>
+                        <div class="pdt10">[[${proxy.six}]]</div>
+                    </a>
+                </li>
+                <li leven="7" style="width: 30%"
+                    class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 proxyInfo">
+                    <a
+                            href="#">
+                    <span class="mui-icon-extra mui-icon-extra-peoples pl10"><span
+                            class="zdnum ml5">7级</span></span>
+                        <div class="pdt10">[[${proxy.seven}]]</div>
+                    </a>
+                </li>
+            </ul>
+
+
+            <!--            ------>
+
+            <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
+                <li style="width: 70%;height: 10%" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <a href="#">
+                        </span>点击等级可查看详细数据</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="mui-table-view mui-grid-view mui-grid-9" style="text-align: center">
+                <img style="width: 100%;height: 100%" th:src="@{/images/yjgz.png}" alt="">
+            </ul>
+            <!--            排行-->
+            <!--
+
+             <ul style="background-color: #e8dadf;" id="list" class="mui-table-view mui-table-view-chevron zdlist">
+
+                 <li leven="1" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <img th:src="@{/images/img/zdph1.png}" class="h35"/>
+                         <img th:src="@{/images/img/zd1.png}" class="h45 ml15"/>
+                         <span class="ml5">大将</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.one}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="2" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <img th:src="@{/images/img/zdph2.png}" class="h35"/>
+                         <img th:src="@{/images/img/zd2.png}" class="h45 ml15"/>
+                         <span class="ml5">太尉</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.two}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="3" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <img th:src="@{/images/img/zdph3.png}" class="h35"/>
+                         <img th:src="@{/images/img/zd3.png}" class="h45 ml15"/>
+                         <span class="ml5">司徒</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.three}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="4" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <span class="zdid">4</span>
+                         <img th:src="@{/images/img/zd4.png}" class="h45 ml15"/>
+                         <span class="ml5">司空</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.four}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="5" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <span class="zdid">5</span>
+                         <img th:src="@{/images/img/zd5.png}" class="h45 ml15"/>
+                         <span class="ml5">太师</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.five}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="6" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <span class="zdid">6</span>
+                         <img th:src="@{/images/img/zd6.png}" class="h45 ml15"/>
+                         <span class="ml5">太傅</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.six}]]</span></p>
+                     </a>
+                 </li>
+                 <li leven="7" class="mui-table-view-cell mui-media proxyInfo">
+                     <a class="mui-navigate-right">
+                         <span class="zdid">7</span>
+                         <img th:src="@{/images/img/zd7.png}" class="h45 ml15"/>
+                         <span class="ml5">太保</span>
+                         <p class="mui-ellipsis fr pdt10">累计人数<span class="zdnum ml5">[[${proxy.seven}]]</span></p>
+                     </a>
+                 </li>
+             </ul>
+
+
+            -->
 
         </div>
 
@@ -1111,35 +1299,45 @@
                             <div class="wd">账号：<span class="mui-media-body nickname"></span></div>
                             <!--<div class="wd">金额：<span class="mui-media-body money"></span></div>-->
                         </a>
+                        <span style="float: right">
+                                                    <span style="float: right;font-size: large;" id="ts">投诉</span>
+                            <!--                                                    <img style="float: right" id="ts" th:src="@{/images/ts.png}" width="35px"-->
+                            <!--                                                         height="34px" alt="投诉">-->
+                                                    </span>
+                        <!--                        <span style="float: right">-->
+                        <!--                            <img style="float: right" id="signin" th:src="@{/images/signin.png}" width="50px"-->
+                        <!--                                 height="50px" alt="签到">-->
+                        <!--                            </span>-->
                     </li>
                 </ul>
                 <div style="background-color:#EFF1F2">
-                    <div class="zhye">
+                    <div class="zhye" style="background-color: aliceblue">
                         <div class="w50 fl">
                             <p class="money"></p>
-                            <p>账户余额(元)</p>
+                            <p>账户余额($)</p>
                         </div>
                         <div class="w50 fl">
                             <p>[[${exchargeMoneySum}]]</p>
-                            <p>提现总额(元)</p>
+                            <p>提现总额($)</p>
                         </div>
                     </div>
 
-                    <div style="height: 80px; width: 100%;background-color: #fff;margin-top: 12px;">
-                        <button type="button" id="recharge" class="btn cbtns bsuccess blockm fl"
-                                style="margin-left: 3%"><img class="img22"
-                                                             th:src="@{/images/mchong.png}"/><span
-                                class="font18">充值</span>
-                        </button>
-                        <button type="button" id="exchange" class="btn cbtns bdanger blockm fr"
-                                style="margin-right: 3%"><img class="img22"
-                                                              th:src="@{/images/mti.png}"/><span
-                                class="font18">提现</span>
-                        </button>
-                    </div>
+                    <!--                    <div style="height: 80px; width: 100%;background-color: #fff;margin-top: 12px;">-->
+                    <!--                        <button   type="button" id="recharge" class="btn cbtns bsuccess blockm fl"-->
+                    <!--                                style="margin-left:28% !important"><img class="img22"-->
+                    <!--                                                             th:src="@{/images/mchong.png}"/><span-->
+                    <!--                                class="font18">充值</span>-->
+                    <!--                        </button>-->
+                    <!--                        <button type="button" id="exchange" class="btn cbtns bdanger blockm fr"-->
+                    <!--                                style="margin-right: 3%"><img class="img22"-->
+                    <!--                                                              th:src="@{/images/mti.png}"/><span-->
+                    <!--                                class="font18">提现</span>-->
+                    <!--                        </button>-->
+                    <!--                    </div>-->
 
                     <div class="mui-content carme">
-                        <ul class="mui-table-view mui-table-view-chevron melist padb50">
+                        <ul style="background-color: aliceblue"
+                            class="mui-table-view mui-table-view-chevron melist padb50">
                             <li class="mui-table-view-cell pd15 rechargehistory">
                                 <a href="#notifications" class="mui-navigate-right"><img class="melistimg"
                                                                                          th:src="@{/images/newimg/personlist1.png}">充值记录</a>
@@ -1154,16 +1352,17 @@
                             </li>
                             <li class="mui-table-view-cell pd15 novicetips">
                                 <a href="#general" class="mui-navigate-right"><img class="melistimg"
-                                                                                   th:src="@{/images/newimg/personlist4.png}">新手须知</a>
-                            </li>
-                            <li class="mui-table-view-cell pd15 modelinfo">
-                                <a href="#general" class="mui-navigate-right"><img class="melistimg"
-                                                                                   th:src="@{/images/newimg/personlist5.png}">平台介绍</a>
+                                                                                   th:src="@{/images/newimg/personlist4.png}">平台介绍</a>
                             </li>
                             <li class="mui-table-view-cell pd15 entry">
                                 <a href="#general" class="mui-navigate-right"><img class="melistimg"
-                                                                                   th:src="@{/images/newimg/personlist6.png}">平台入口</a>
+                                                                                   th:src="@{/images/newimg/personlist6.png}">在线客服</a>
                             </li>
+                            <li class="mui-table-view-cell pd15 modelinfo">
+                                <a href="#general" class="mui-navigate-right"><img class="melistimg"
+                                                                                   th:src="@{/images/newimg/personlist5.png}">客服QQ群</a>
+                            </li>
+
                             <!--                        <li class="mui-table-view-cell pd15">-->
                             <!--                            <a href="#general" class="mui-navigate-right"><img class="melistimg" th:src="@{/images/newimg/hgjl.png}">App下载/a>-->
                             <!--                        </li>-->
@@ -1193,27 +1392,29 @@
 <!--</div>-->
 <p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe"
    data-modal="modal-4"></p>
-<div class="md-modal md-effect-2" id="modal-4" style="width: 90%;">
-    <div class="md-content">
+<div class="md-modal md-effect-2" id="modal-4" style="width: 77%;">
+    <div style="height: 238px;" class="md-content">
         <h3>交易订单</h3>
         <!--<h4 class="mui-ellipsis fff pl25 pr25">订单号：26ddssdsafasfdsgfdytjgkmfyutdr2e3</h4>-->
 
-        <div class="d1" style="position: relative;display: inline-block;left: 25%;">
-            <input class="knobs knob" data-fgColor="skyblue" data-thickness=".1" data-width="100" data-min="0"
-                   data-angleOffset="0" data-displayPrevious=true>
-            <span class="second"></span>
-        </div>
-        <p class="mui-text-center knobp d2"><span>买入金额：<span class="mr30 font18 btngou">10</span></span><span>预计收益：<span
-                class="font18 yjbt"></span></span></p>
-        <p class="mui-text-center knobp"><span style="margin-left: 9%">买入指数：<span class="mr30 font18 mrzs">6.7977</span></span><span
-                style="display: -webkit-inline-box">&nbsp;当前价格：<span
-                class="font18 c1"></span></span>
-            <BR>
-            <span style="margin-left: 9%">最终指数：<span class="mr30 font18 zzzs">         ?         </span></span></p>
-        <p class="mui-text-center knobp"><span>方向：<span class="mr30 font18 iszd"></span></span><span>最终结果：<span
+        <!--        <div class="d1" style="position: relative;display: inline-block;left: 25%;">-->
+        <!--            <input class="knobs knob" data-fgColor="skyblue" data-thickness=".1" data-width="100" data-min="0"-->
+        <!--                   data-angleOffset="0" data-displayPrevious=true>-->
+        <!--            <span class="second"></span>-->
+        <!--        </div>-->
+        <p class="mui-text-center knobp d2"><span>买入金额：<span class="mr30 font18 btngou">10</span>( USD )</span></p>
+        <p class="mui-text-center knobp d2"><span>预计收益：<span class="mr30 font18 yjbt">10</span>( USD )</span></p>
+        <!--        <p class="mui-text-center knobp"><span style="margin-left: 9%">买入指数：<span class="mr30 font18 mrzs">6.7977</span></span><span-->
+        <!--                style="display: -webkit-inline-box">当前价格：<span-->
+        <!--                class="font18 c1"></span></span>-->
+        <!--            <BR>-->
+        <!--            &lt;!&ndash;            <span style="margin-left: 9%">最终指数：<span class="mr30 font18 zzzs">         ?         </span></span>&ndash;&gt;-->
+        <!--        </p>-->
+        <p class="mui-text-center knobp"><span>待仓方向：<span class="mr30 font18 iszd"></span></span><span>最终结果：<span
                 class="font18 ycjg">?</span></span></p>
         <div style="width: 100%;text-align: center;color: #fff;">
-            <button type="button" class="btn btns bdanger cgou">继续购买</button>
+            <button style="width: 99%;background-color: #4CAF50" type="button" class="btn btns bdanger cgou">继续购买
+            </button>
         </div>
         <!--      2222-->
         <div>
@@ -1237,34 +1438,101 @@
         </div>
     </div>
 </div>
-
-
-<p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe1"
-   data-modal="modal-1"></p>
-<div class="md-modal md-effect-4" id="modal-1" style="text-align: center;font-size: 20px;color: gold;">
-    <!--<a href="zsjc"-->
-    <!--style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
-    <!--1.走势教程 >>-->
-    <!--</a>-->
-    <!--<a href="btjq"-->
-    <!--style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
-    <!--2.倍投教程 >>-->
-    <!--</a>-->
-    <!--<a href="tgjc"-->
-    <!--style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
-    <!--3.推广教程 >>-->
-    <!--</a>-->
-    <a href="javascropt:void(0);"
-       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">
-        客服二维码
-    </a>
-    <div style="width: 70%;" class="md-content">
-        <img style="width: 100%;height: 100%" th:src="@{/images/kf.png}">
+<!--START 弹出推广图片-->
+<p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe7"
+   data-modal="modal-7"></p>
+<div class="md-modal md-effect-4" id="modal-7" style="text-align: center;font-size: 20px;color: gold;">
+    <!--    <a href="javascropt:void(0);"-->
+    <!--       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
+    <!--        客服二维码-->
+    <!--    </a>-->
+    <div style="width: 88%;" class="md-content">
+        <!--        <img th:src="@{/images/wf1.png}" style="width: 100%;height: 100%">-->
+        <img ID="tgQrcode" style="width: 100%;height: 100%">
     </div>
     <!--<button style="background-color: #87d8c9;width: 90%;text-decoration: none;border: 0px"-->
     <!--class="md-close btn-sm btn-primary">关闭-->
     <!--</button>-->
-    <button style="width: 70%;text-decoration: none;border: 0px;background-color: #00aeef;"
+    <button style="width: 88%;text-decoration: none;border: 0px;background-color: blueviolet;"
+            class="md-close btn-sm btn-danger">关闭
+    </button>
+</div>
+
+<!--end 弹出推广图片-->
+
+
+<!--START 弹出客服图片-->
+<p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe9"
+   data-modal="modal-9"></p>
+<div class="md-modal md-effect-4" id="modal-9" style="text-align: center;font-size: 20px;color: gold;">
+    <!--    <a href="javascropt:void(0);"-->
+    <!--       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
+    <!--        客服二维码-->
+    <!--    </a>-->
+    <div style="width: 88%;" class="md-content">
+        <img th:src="@{/images/kf.png}" style="width: 100%;height: 100%">
+        <!--        <img ID="tgQrcode" style="width: 100%;height: 100%">-->
+    </div>
+    <!--<button style="background-color: #87d8c9;width: 90%;text-decoration: none;border: 0px"-->
+    <!--class="md-close btn-sm btn-primary">关闭-->
+    <!--</button>-->
+    <button style="width: 88%;text-decoration: none;border: 0px;background-color: #00aeef;"
+            class="md-close btn-sm btn-danger">关闭
+    </button>
+</div>
+
+<!--end 弹出推广图片-->
+
+<!--START 弹出推广图片-->
+<p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe8"
+   data-modal="modal-8"></p>
+<div class="md-modal md-effect-4" id="modal-8" style="text-align: center;font-size: 20px;color: gold;">
+    <!--    <a href="javascropt:void(0);"-->
+    <!--       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #00aeef;border-radius: 15px; display: inline-block; margin-bottom: 5px;">-->
+    <!--        客服二维码-->
+    <!--    </a>-->
+    <div style="width: 88%;" class="md-content">
+        <img th:src="@{/images/wf1.png}" style="width: 66%;height: 100%">
+        <!--        <img ID="tgQrcode" style="width: 100%;height: 100%">-->
+    </div>
+    <!--<button style="background-color: #87d8c9;width: 90%;text-decoration: none;border: 0px"-->
+    <!--class="md-close btn-sm btn-primary">关闭-->
+    <!--</button>-->
+    <button style="width: 88%;text-decoration: none;border: 0px;background-color: #673ab7;"
+            class="md-close btn-sm btn-danger">关闭
+    </button>
+</div>
+
+<!--end 弹出推广图片-->
+
+<p href="javascript:;" style="display: none" class="md-trigger btn btn-primary btn-sm" id="showMe1"
+   data-modal="modal-1"></p>
+<div class="md-modal md-effect-4" id="modal-1"
+     style="text-align: center;font-size: 20px;color: gold;height: 55%;opacity: .9;background-color: black">
+    <a href="zsjc"
+       style="margin-top:12px;color: white;padding: 10px 0 10px 0;width: 70%; background-color: #673ab7;border-radius: 15px; display: inline-block; margin-bottom: 5px;">
+        1.走势详解 >>
+    </a>
+    <a href="btjq"
+       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #673ab7;border-radius: 15px; display: inline-block; margin-bottom: 5px;">
+        2.自买赚钱 >>
+    </a>
+    <a href="tgjc"
+       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #673ab7;border-radius: 15px; display: inline-block; margin-bottom: 5px;">
+        3.推广致富 >>
+    </a>
+    <a href="javascropt:void(0);"
+       style="color: white;padding: 10px 0 10px 0;width: 70%; background-color: #673ab7;border-radius: 15px; display: inline-block; margin-bottom: 5px;">
+        客服二维码
+    </a>
+    <div style="width: 70%;" class="md-content">
+        <img class="shanshuo" style="width: 62%;height: 100%" th:src="@{/images/kf.png}">
+        <!--        <img style="width: 40%;height: 100%" th:src="@{/images/kf2.png}">-->
+    </div>
+    <!--<button style="background-color: #87d8c9;width: 90%;text-decoration: none;border: 0px"-->
+    <!--class="md-close btn-sm btn-primary">关闭-->
+    <!--</button>-->
+    <button style="width: 70%;text-decoration: none;border: 0px;background-color: #673ab7;"
             class="md-close btn-sm btn-danger">关闭
     </button>
 </div>
@@ -1290,6 +1558,9 @@
 <script th:src="@{/js/other.js}"></script>
 <script th:src="@{/js/num.js}"></script>
 <script th:src="@{/js/link.js}"></script>
+<script th:src="@{/assets/js/custom-scripts.js}" src="assets/js/custom-scripts.js"></script>
+<script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
+<script th:src="@{/dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
 <script th:src="@{/js/qrcode.js}"></script>
 <script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
 <script th:src="@{/dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
@@ -1322,9 +1593,9 @@
             }
 
             $('.bgmodal').addClass('none');
-//            $('.bgmodal').addClass('dnone');
+            // $('.bgmodal').addClass('dnone');
             //隐藏下单30秒现实框
-//            $('#modal-4').addClass('md-show');
+            $('#modal-4').addClass('md-show');
             if (clearint != null) return;
             setTimeout(() => {
                 $('.second').slideDown();
@@ -1445,7 +1716,7 @@
         if (lookid == '1') {
             // 11111
             $('.subBtn,.btnsdiv').css('background-color', '#D14B65');
-            $('.iszd').text('买涨').css('color', '#D14B65');
+            $('.iszd').text('涨').css('color', '#D14B65');
             $('.cgou').trigger('click');
             $('.lookcolor').text(lookval);
             $('.lookcolor').css('color', 'red');
@@ -1453,7 +1724,7 @@
             // console.log('买涨')
         } else {
             $('.subBtn,.btnsdiv').css('background-color', '#4DAA90');
-            $('.iszd').text('买跌').css('color', '#4DAA90');
+            $('.iszd').text('跌').css('color', '#4DAA90');
             $('.cgou').trigger('click');
             $('.lookcolor').text(lookval);
             $('.lookcolor').css('color', 'green');
@@ -1477,18 +1748,33 @@
         $(this).addClass('dnone')
     });
     //music
-    document.getElementById('notice').play();
+
+
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     //订单
     //        $('#showMe').click();
 
     //客服二维码
-    // $('#showMe1').click();
+    $('#showMe1').click();
     $("#asd").click(function () {
         $('#showMe1').click();
     });
     $(".rightph2").click(function () {
-        $('#showMe1').click();
+        $('#showMe9').click();
     });
     //阻止事件冒泡
     $("#proxy").on("tap", function (event) {
@@ -1528,6 +1814,9 @@
     $(".tgqr").on("tap", function (event) {
         event.stopPropagation();
     });
+    $("#ts").on("tap", function (event) {
+        event.stopPropagation();
+    });
 
     // H5 plus事件处理
     function plusReady() {
@@ -1537,7 +1826,10 @@
 
     //推广二维码
     $('.tgqr').click(function () {
-        window.location.href = "/cocoker/user/uniqueQrcode?openid=" + getCookie('openid');
+        $("#tgQrcode").attr("src", "/cocoker/user/uniqueQrcode?openid=" + getCookie('openid'))
+        $('#showMe7').click();
+
+        // window.location.href = "/cocoker/user/uniqueQrcode?openid=" + getCookie('openid');
     });
     if (window.plus) {
         plusReady();
@@ -1652,12 +1944,123 @@
                     var picTd = $("<td></td>").append($("<img>").addClass('tableimg').attr("src", item.opic));
                     var timeTd = $("<td></td>").append(item.createTime);
                     var targetTd = $("<td></td>").css("color", item.direction == "看涨" ? "red" : "green").append(item.direction);
-                    var moneyTd = $("<td></td>").append(item.money * 2 + "$");
+                    var moneyTd = $("<td></td>").append(item.money * 1.85 + "$");
                     var tr = $("<tr></tr>").append(picTd).append(timeTd).append(targetTd).append(moneyTd);
                     tr.appendTo($('.newOrder2'));
                 })
             }
         });
     }, 30 * 1000);
+
+
+    //    签到
+    $("#signin").click(function () {
+        $.ajax({
+            url: "/cocoker/user/signin",
+            data: {"openid": getCookie('openid')},
+            type: "GET",
+            success: function (result) {
+                $("#tgQrcode").attr("src", "/cocoker/user/uniqueQrcode?openid=" + getCookie('openid'))
+                // console.log(result);
+                if (result.code == 0) {
+                    popup({type: 'success', msg: "签到成功！获得" + result.data.money, delay: 3000});
+
+                    //更新余额
+                    $.ajax({
+                        url: "/cocoker/user/get",
+                        data: {"openid": getCookie('openid')},
+                        success: function (result) {
+                            // console.log(result);
+                            if (result.code == 0) {
+                                var user = result.data;
+                                $('.userpic').attr("src", user.upic);
+                                $('.nickname').text(user.nickname);
+                                $('.money').text(user.usermoney);
+                            } else {
+                                window.location.href = "http://frqd.com.cn/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
+                            }
+                        },
+                        error: function (result) {
+                        }
+                    });
+
+                    $('#showMe8').click();
+                } else {
+                    popup({type: 'tip', msg: "勿重复签到！", delay: 2000});
+                    $('#showMe8').click();
+
+                    // //mui初始化
+                    // mui.init();
+                    //
+                    // var defaultTab = document.getElementById("yqjm");
+                    // //模拟首页点击
+                    // mui.trigger(defaultTab, 'tap');
+                    // //切换选项卡高亮
+                    // var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+                    // if (defaultTab !== current) {
+                    //     current.classList.remove('mui-active');
+                    //     defaultTab.classList.add('mui-active');
+                    // }
+                }
+            }
+        });
+    })
+
+
+    $("#ts").click(function () {
+        window.location.href = "tousu";
+    });
+
+    $(".rightph3").click(function () {
+        window.location.href = "commissionredpack";
+    });
+
+
+    //    移动div
+
+    //获取元素
+    var dv = document.getElementById('movediv');
+    var x = 0;
+    var y = 0;
+    var l = 0;
+    var t = 0;
+    var isDown = false;
+    //鼠标按下事件
+    dv.onmousedown = function (e) {
+        //获取x坐标和y坐标
+        x = e.clientX;
+        y = e.clientY;
+
+        //获取左部和顶部的偏移量
+        l = dv.offsetLeft;
+        t = dv.offsetTop;
+        //开关打开
+        isDown = true;
+        //设置样式
+        dv.style.cursor = 'move';
+    }
+    //鼠标移动
+    window.onmousemove = function (e) {
+        if (isDown == false) {
+            return;
+        }
+        //获取x和y
+        var nx = e.clientX;
+        var ny = e.clientY;
+        //计算移动后的左偏移量和顶部的偏移量
+        var nl = nx - (x - l);
+        var nt = ny - (y - t);
+
+        dv.style.left = nl + 'px';
+        dv.style.top = nt + 'px';
+    }
+    //鼠标抬起事件
+    dv.onmouseup = function () {
+        //开关关闭
+        isDown = false;
+        dv.style.cursor = 'default';
+    }
+
+
 </script>
 </html>

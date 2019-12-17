@@ -17,8 +17,8 @@ import java.util.Random;
  * @CreateDate: 2018/12/24 8:43 PM
  * @Version: 1.0
  */
-@SpringBootTest
 @RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserInfoServiceImplTest {
     @Autowired
     private UserInfoService userInfoService;

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cocoker.VO.PayReturnParamVO;
 import com.cocoker.beans.Recharge;
 import com.cocoker.config.WechatAccountConfig;
+import com.cocoker.controller.TransactionController;
 import com.cocoker.converter.PayResult2Bean;
 import com.cocoker.dao.RechargeDao;
 import com.cocoker.enums.ResultEnum;
@@ -57,34 +58,32 @@ public class PayServiceImpl implements PayService {
 
     private static final DecimalFormat df = new DecimalFormat("#.00");
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final String APP_ID = "ec70e9e7-31f6-4c2b-bff6-c5681983e459";
 
     @Override
-    public synchronized Map<String, Object> create(String openid, String money, String rm) {
+    public synchronized Map<String, Object> create(String openid, String money, String type) {
         String orderId = KeyUtil.genUniqueKey();
 //        RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("pay_memberid", accountConfig.getCustomeridY1());
-        map.add("pay_orderid", orderId);
-        map.add("pay_applydate", sdf.format(new Date()));
-//        if (rm.equals("1")) {
-        map.add("pay_bankcode", "933");
-//        } else {
-//            map.add("pay_bankcode", "902");
-//        }
-        map.add("pay_notifyurl", accountConfig.getNotifyurlY1());
-        map.add("pay_callbackurl", accountConfig.getReturnurlY1());
-        if (money.equals("3")) {
-            map.add("pay_amount", "20.00");
-        } else {
-            String m = df.format(Double.valueOf(money));
-            Double amount = Double.valueOf(df.format(Double.valueOf(m) * 7));
-            map.add("pay_amount", amount);
+        map.add("uid", accountConfig.getCustomeridY1());
+        map.add("appid", APP_ID);
+//        map.add("merchant", accountConfig.getCustomeridY1());
+        map.add("order_no", orderId);
+//        map.add("notify_url", "http://rhyme.nat300.top/cocoker/transaction/notifyurl");
+//        map.add("return_url", "http://rhyme.nat300.top/cocoker/transaction/returnurl");
+        map.add("notify_url", accountConfig.getNotifyurlY1());
+        map.add("return_url", accountConfig.getReturnurlY1());
+//        String m = df.format(Double.valueOf(money));
+        String m = df.format(Double.valueOf(money) * TransactionController.RATE);
+        map.add("amount", m);
+        if (type.equals("ali1")) {
+            map.add("type", "15");
         }
-        String flag = ASCIISort.sort(map.toSingleValueMap());
-        map.add("pay_md5sign", MD5.md5(flag + "&key=" + accountConfig.getCustomerKey1(), "").toUpperCase());
-        map.add("pay_url", accountConfig.getPayUrl1());
-//        map.add("pay_url", accountConfig.getPayUrl1());
-        map.add("pay_productname", openid);
+        map.add("remark", openid);
+        String flag = ASCIISort.sort(map.toSingleValueMap()) + "&key=" + accountConfig.getCustomerKey1();
+        map.add("sign", MD5.md5(flag, "").toUpperCase());
+//        map.add("sign", MD5.md5(flag + "&key=" + accountConfig.getCustomerKey1(), "").toLowerCase());
+        map.add("payUrl", accountConfig.getPayUrl1());
 //        Object post = HttpClientUtil.post(payUrl2, new JSONObject(map.toSingleValueMap()));
 //        String result = restTemplate.postForObject(payUrl2, map, String.class);
 //        PayReturnParamVO prp = PayResult2Bean.convert(result);
@@ -98,33 +97,71 @@ public class PayServiceImpl implements PayService {
         recharge.setTorderid(orderId);
         recharge.setTstatus(0);
         recharge.setCreateTime(new Date());
+//        recharge.setTmoney(new BigDecimal(m));
         recharge.setTmoney(new BigDecimal(money));
         rechargeDao.save(recharge);
         return map.toSingleValueMap();
     }
+//    @Override
+//    public synchronized Map<String, Object> create(String openid, String money, String type) {
+//        String orderId = KeyUtil.genUniqueKey();
+////        RestTemplate restTemplate = new RestTemplate();
+//        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+//        map.add("pay_memberid", accountConfig.getCustomeridY1());
+//        map.add("pay_orderid", orderId);
+//        map.add("pay_applydate", sdf.format(new Date()));
+//        if (type.equals("ali1")) {
+//            map.add("pay_bankcode", "939");//zfb
+//        } else {
+//            map.add("pay_bankcode", "941");//wx
+//        }
+//        map.add("pay_notifyurl", accountConfig.getNotifyurlY1());
+//        map.add("pay_callbackurl", accountConfig.getReturnurlY1());
+//        String m = df.format(Double.valueOf(money));
+//        Double amount = Double.valueOf(df.format(Double.valueOf(m)));
+//        map.add("pay_amount", amount);
+////        }
+//        String flag = ASCIISort.sort(map.toSingleValueMap());
+//        map.add("pay_md5sign", MD5.md5(flag + "&key=" + accountConfig.getCustomerKey1(), "").toUpperCase());
+//        map.add("pay_url", accountConfig.getPayUrl1());
+//        map.add("pay_productname", openid);
+////        Object post = HttpClientUtil.post(payUrl2, new JSONObject(map.toSingleValueMap()));
+////        String result = restTemplate.postForObject(payUrl2, map, String.class);
+////        PayReturnParamVO prp = PayResult2Bean.convert(result);
+////        if (prp == null || prp.getCode().equals("0")) {
+////            log.error("[创建支付链接] 失败");
+////            throw new CocokerException(ResultEnum.CREATE_ORDER_ERROR);
+////        }
+//        Recharge recharge = new Recharge();
+//        recharge.setTopenid(openid);
+////        recharge.setTyue();
+//        recharge.setTorderid(orderId);
+//        recharge.setTstatus(0);
+//        recharge.setCreateTime(new Date());
+//        recharge.setTmoney(new BigDecimal(money));
+//        rechargeDao.save(recharge);
+//        return map.toSingleValueMap();
+//    }
 
 
     @Override
     public synchronized PayReturnParamVO create2(String openid, String money) {
-        String mid = accountConfig.getCustomeridY2();
-        String key = accountConfig.getCustomerKey2();
-        String payUrl = accountConfig.getPayUrl2();
+        String appId = "02a13eb8-91aa-4162-b423-6357e4dd9b54";
+        String key = "onbq2vdvtie4lkj1jpoqco9na1vicemh";
+        String payUrl = "http://business.zs600.cn/api/api/sell";
         String orderId = KeyUtil.genUniqueKey();
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("merchant_no", mid);
-        map.add("version", "1.0");
-        map.add("payment_type", "WxPay-JSPay");
-        map.add("merchant_data", openid);
-        map.add("merchant_order_num", orderId);
+        map.add("appid", appId);
+        map.add("order_no", orderId);
+        map.add("url", accountConfig.getNotifyurlY2());
         String m = df.format(Double.valueOf(money));
-        Double d = Double.valueOf(df.format(Double.valueOf(m) * 1));
-//        Double d = Double.valueOf(df.format(Double.valueOf(m) * 6.79));
-        map.add("amount", d.toString());
-        map.add("notify_url", accountConfig.getNotifyurlY2());
         map.add("return_url", accountConfig.getReturnurlY2());
-        String flag = "amount=" + d.toString() + "&merchant_no=" + mid + "&merchant_order_num=" + orderId + "&notify_url=" + accountConfig.getNotifyurlY2() + "&payment_type=WxPay-JSPay&return_url=" + accountConfig.getReturnurlY2() + "&version=1.0&key=" + key;
-        map.add("sign", MD5.md5(flag, ""));
+        map.add("remark", openid);
+        Double d = Double.valueOf(df.format(Double.valueOf(m) * 1));
+        map.add("amount", d.intValue());
+        String flag2 = ASCIISort.sort(map.toSingleValueMap());
+        map.add("sign", MD5.md5(flag2 + "&key=" + key, "").toUpperCase());
         String result = restTemplate.postForObject(payUrl, map, String.class);
         PayReturnParamVO prp = PayResult2Bean.convert(result);
         if (prp.getCode() != 200) {

@@ -21,8 +21,8 @@ import static org.junit.Assert.*;
  * @Version: 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @Slf4j
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MD5Test {
     @Test
     public void testMd5() throws Exception {

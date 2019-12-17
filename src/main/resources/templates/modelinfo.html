@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>西瓜赢家</title>
+    <title>USDA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -36,7 +36,7 @@
 <div class="mui-content">
     <div class="container">
         <div class="row clearfix" style="padding: 13px;">
-            <h3> 什么是币圈财经？</h3><br>
+            <h3> 什么是USDA？</h3><br>
             <p style="color: #3c3c52">
                 1.什么是美元汇率？<br>
                 只判断涨跌即可赚钱，最快30秒完成交易，每笔收益最高可达90%，小投入大回报！ 可选择判比特币或者另外3种产品合约最快30秒后的涨跌情况，只要涨跌方向判断 正确，30秒即可获得高达80%的投资收益，快速、安全、高效、透明。<br>
@@ -56,7 +56,7 @@
                 方便快捷，放心，我们很安全。
                 <br><br>
                 5.投资有风险，入行需谨慎。<br>
-                凡是投资类项目，在获得较高收益的同时，也伴有风险。请大家合理投资，健康投资，币圈财经祝大家投资愉快，生活愉快！
+                凡是投资类项目，在获得较高收益的同时，也伴有风险。请大家合理投资，健康投资，USDA祝大家投资愉快，生活愉快！
             </p>
         </div>
     </div>
@@ -67,7 +67,20 @@
 </audio>
 </body>
 <script>
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     mui.init({
         swipeBack: true //启用右滑关闭功能

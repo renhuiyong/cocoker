@@ -27,4 +27,14 @@ public class ProjectUrl {
 
     private String zeroMoneyKey;
 
+    private String moneylessthan5;
+
+    private String moneylessthan25;
+
+    private String moneylessthan50;
+
+    private String moneylessthan100;
+
+    private String moneylessthan500;
+
 }

@@ -107,14 +107,14 @@ $(function () {
         $('.btndiv button').removeAttr("check").removeClass('btnsdiv');
         $(this).attr("check", "check").addClass('btnsdiv');
         // $(".c2").text((Number(this.innerText.substring(2) * 6.89).toFixed(2)));
-        $('.yjbt').text((Number($(this).text()* 1.85).toFixed(2)));
+        $('.yjbt').text((Number($(this).text() * 1.85).toFixed(2)));
     });
 
     //刚进来看看有没有赢的订单未结算
     function checkOrder() {
         $.ajax({
             url: "/cocoker/order/info",
-            data: {"openid": getCookie('openid'),"first":true,"currentMoney":currentMoney,"oid":""},
+            data: {"openid": getCookie('openid'), "first": true, "currentMoney": currentMoney, "oid": ""},
             type: "GET",
             success: function (result) {
                 if (result.code == 0) {
@@ -124,24 +124,36 @@ $(function () {
         });
     }
 
+    checkOrder();
     setTimeout(checkOrder, 31 * 1000)
 
     //
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });
-    
+
     //提交订单
     $('.subBtn').click(function () {
         if ($('.btndiv button[check=check]').length < 1) {
             popup({type: 'tip', msg: "请选择数量", delay: 1500});
             return
         }
+        // if ($('.customNum').length < 5) {
+        //     popup({type: 'tip', msg: "大于5", delay: 1500});
+        //     return
+        // }
+
         var money = currentMoney;
-        priceDatas.push(money);
-        choosePrice = money;//选中
-        //console.log("时间1："+currentDate);
-        dsqks =true;
+
+        //判断余额是否够
+        var curNum = $('.money')[0].innerText.substring(0);
+        var tarNum = $('.btndiv button[check=check]')[0].innerText;
+        if (parseInt(curNum) > parseInt(tarNum)) {
+            priceDatas.push(money);
+            choosePrice = money;//选中
+            //console.log("时间1："+currentDate);
+        }
+        dsqks = true;
         $.ajax({
             url: "/cocoker/order",
             data: {
@@ -152,7 +164,11 @@ $(function () {
                 "currentDate": currentDate
             },
             success: function (result) {
-            	//console.log("时间2："+currentDate);
+                if (result.code == -1) {
+                    $('#modal-4').removeClass('md-show');
+                    priceDatas = [];
+                }
+                //console.log("时间2："+currentDate);
                 //关闭选择框
                 $('.goumoney').hide();
                 //显示买入时的值
@@ -215,14 +231,14 @@ $(function () {
 
 
                     //计时
-                   /* let s = 30;
-                    var flag = setInterval(function () {
-                        if (s < 1) {
-                            clearInterval(flag);
-                            s = 31;
-                        }
-                        $('.sec').text(s -= 1);
-                    }, 1000);*/
+                    /* let s = 30;
+                     var flag = setInterval(function () {
+                         if (s < 1) {
+                             clearInterval(flag);
+                             s = 31;
+                         }
+                         $('.sec').text(s -= 1);
+                     }, 1000);*/
 
                     //弹窗
                     popup({type: 'success', msg: "订单提交成功", delay: 1000});
@@ -232,13 +248,14 @@ $(function () {
                     $('.money').text(user.usermoney);
                     xdOid.push(user.oid);//保存订单id
                     //console.log(xdOid);
+                    setTimeout(checkOrder, 31 * 1000)
                 } else {
-                	if(dsq){//下单失败  清除定时器
-                		clearTimeout(dsq);
+                    if (dsq) {//下单失败  清除定时器
+                        clearTimeout(dsq);
                         clearInterval(flag);
                         s = 31;
                         $('.sec').text(s -= 1);
-                	}
+                    }
                     popup({type: 'tip', msg: result.msg, delay: 1500});
                 }
             }
@@ -261,18 +278,18 @@ $(".newbtnparent button").on("tap", function (event) {
     event.stopPropagation();
 });
 
-$(function(){
+$(function () {
     //获取mn成交数据
     getTurnover();
 
-    setInterval(getTurnover,13000)
+    setInterval(getTurnover, 13000)
 
     function getTurnover() {
         $.ajax({
             url: "/cocoker/getTurnover",
             success: function (res) {
                 $("#dataNums").rollNumDaq({
-                    deVal:res
+                    deVal: res
                 });
             }
         })

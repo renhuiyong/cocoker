@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * @Version: 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RechargeDaoTest {
     @Autowired
     private RechargeDao rechargeDao;

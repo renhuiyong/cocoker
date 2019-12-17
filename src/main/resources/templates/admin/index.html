@@ -15,7 +15,7 @@
     <link th:href="@{/assets/css/custom-styles.css}" href="assets/css/custom-styles.css" rel="stylesheet"/>
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-          href="assets/js/Lightweight-Chart/cssCharts.css">
+    href="assets/js/Lightweight-Chart/cssCharts.css">
     <link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
 
 </head>
@@ -33,12 +33,15 @@
         <div class="header">
             <h1 class="page-header">
                 主页
-                <small>Welcome <span th:if="${session.admin == null}" th:text="空"></span> <span th:if="${session.admin != null}" th:text="${session.admin.YUsername}"></span></small>
+                <small>Welcome <span th:if="${session.admin == null}" th:text="空"></span> <span
+                        th:if="${session.admin != null}" th:text="${session.admin.YUsername}"></span></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#">主页</a></li>
                 <!--<li><a href="#">Dashboard</a></li>-->
                 <!--<li class="active">Data</li>-->
+                <li ID="stopRefresh" style="float: right"><a href="#">关闭自动刷新</a></li>
+                <li ID="autoRefresh" style="float: right"><a href="#">自动刷新 / 5s </a></li>
             </ol>
 
         </div>
@@ -173,9 +176,13 @@
                             </td>
                             <td>
                                 <!--<a th:href="@{'/admin/ui-elements?page=' + ${i} + '&size=10'}"-->
-                                <button th:lock="@{${user.yUid}}" type="button" class="btn btn-success btn-xs lock">禁用</button>
-                                <button th:unlock="@{${user.yUid}}" type="button" class="btn btn-danger btn-xs unlock">解禁</button>
-                                <a th:href="@{'/admin/operation/delUser?id='+${user.yUid}}" type="button" class="btn btn-danger btn-xs">删除</a>
+                                <button th:lock="@{${user.yUid}}" type="button" class="btn btn-success btn-xs lock">禁用
+                                </button>
+                                <button th:unlock="@{${user.yUid}}" type="button" class="btn btn-danger btn-xs unlock">
+                                    解禁
+                                </button>
+                                <a th:href="@{'/admin/operation/delUser?id='+${user.yUid}}" type="button"
+                                   class="btn btn-danger btn-xs">删除</a>
                             </td>
                         </tr>
                         </tbody>
@@ -186,6 +193,9 @@
             <div class="row clearfix pull-right">
                 <div class="col-md-12 column">
                     <ul class="pagination">
+                        <li>
+                            <a href="/cocoker/admin/index?page=0&size=100000">All</a>
+                        </li>
                         <li>
                             <a href="/cocoker/admin/index?page=0&size=10">1</a>
                         </li>
@@ -256,54 +266,71 @@
 <script th:src="@{/dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
 <script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
 <script>
-/*
+    /*
 
-$('#success').click(function(){
-   popup({type:'success',msg:"操作成功",delay:1000,callBack:function(){
-	  console.log('callBack~~~');
-   }});
-})
-$('#error').click(function(){
-   popup({type:'error',msg:"操作失败",delay:2000,bg:true,clickDomCancel:true});
-})
-$('#load').click(function(){
-   popup({type:'load',msg:"请等待",delay:1500,callBack:function(){
-	  popup({type:"success",msg:"加载成功",delay:1000});
-   }});
-})
-$('#tip').click(function(){
-   popup({type:'tip',msg:"提示信息",delay:null});
-})
- */
+    $('#success').click(function(){
+       popup({type:'success',msg:"操作成功",delay:1000,callBack:function(){
+          console.log('callBack~~~');
+       }});
+    })
+    $('#error').click(function(){
+       popup({type:'error',msg:"操作失败",delay:2000,bg:true,clickDomCancel:true});
+    })
+    $('#load').click(function(){
+       popup({type:'load',msg:"请等待",delay:1500,callBack:function(){
+          popup({type:"success",msg:"加载成功",delay:1000});
+       }});
+    })
+    $('#tip').click(function(){
+       popup({type:'tip',msg:"提示信息",delay:null});
+    })
+     */
     $(function () {
         //禁用
-        $(".lock").on("click",function(){
+        $(".lock").on("click", function () {
             $.ajax({
-                url:"/cocoker/admin/operation/lock/"+$(this).attr("lock"),
+                url: "/cocoker/admin/operation/lock/" + $(this).attr("lock"),
                 type: "POST",
                 success: function (result) {
-                    if(result.code == 0){
-                        popup({type:'success',msg:"操作成功",delay:1000});
-                    }else{
-                        popup({type:'error',msg:result.msg,delay:2000,bg:true,clickDomCancel:true});
+                    if (result.code == 0) {
+                        popup({type: 'success', msg: "操作成功", delay: 1000});
+                    } else {
+                        popup({type: 'error', msg: result.msg, delay: 2000, bg: true, clickDomCancel: true});
                     }
                 }
             });
         });
         //解除禁用
-        $(".unlock").on("click",function(){
+        $(".unlock").on("click", function () {
             $.ajax({
-                url:"/cocoker/admin/operation/unlock/"+$(this).attr("unlock"),
+                url: "/cocoker/admin/operation/unlock/" + $(this).attr("unlock"),
                 type: "POST",
                 success: function (result) {
-                    if(result.code == 0){
-                        popup({type:'success',msg:"操作成功",delay:1000});
-                    }else{
-                        popup({type:'error',msg:result.msg,delay:2000,bg:true,clickDomCancel:true});
+                    if (result.code == 0) {
+                        popup({type: 'success', msg: "操作成功", delay: 1000});
+                    } else {
+                        popup({type: 'error', msg: result.msg, delay: 2000, bg: true, clickDomCancel: true});
                     }
                 }
             });
         });
+    })
+
+
+    var a1;
+
+    function auto() {
+        a1 = setTimeout(function () {
+            window.location.reload();
+        }, 10000)
+    }
+
+    auto();
+    $("#autoRefresh").click(function () {
+        auto();
+    })
+    $("#stopRefresh").click(function () {
+        clearTimeout(a1)
     })
 </script>
 </body>

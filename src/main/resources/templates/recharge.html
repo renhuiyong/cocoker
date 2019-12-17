@@ -38,7 +38,7 @@
         }
 
         .btnsdiv2 {
-            background: #EBB33F !important;
+            background: #00aeef !important;
             color: #000 !important;
             border: 0;
         }
@@ -121,9 +121,9 @@
     </style>
 <body class="black">
 
-<header class="mui-bar mui-bar-nav">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">充值</h1>
+<header style="background-color: #00aeef" class="mui-bar mui-bar-nav">
+    <a style="background-color: #00aeef" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 style="background-color: #00aeef" class="mui-title">充值</h1>
 </header>
 
 
@@ -138,35 +138,38 @@
         <!--        </div>-->
         <h6 class="xzcz">充值金额</h6>
         <div class="btndiv2">
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>3
-            </button>
-            <button type="button" class="btn btn-default"><span>$&nbsp;</span>10</button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>20
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>30
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>50
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>100
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>200
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>500
-            </button>
-            <button type="button" class="btn btn-default"><span aria-hidden="true"
-                                                                style="font-size: 10px;">$&nbsp;</span>1000
-            </button>
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>88-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span>¥&nbsp;</span>188</button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>288-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>488-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>688-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>888-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>988-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>1288-->
+            <!--            </button>-->
+            <!--            <button type="button" class="btn btn-default"><span aria-hidden="true"-->
+            <!--                                                                style="font-size: 10px;">¥&nbsp;</span>2888-->
+            <!--            </button>-->
 
+            <button th:each="moeny : ${rechargeMoeny}" type="button" class="btn btn-default"><span aria-hidden="true"
+                                                                                                   style="font-size: 10px;">$&nbsp;</span>[[${moeny}]]
+            </button>
         </div>
-        <!--        <p style="text-align: center">当前汇率: <span class="c1"></span></p>-->
-        <p style="text-align: center">需支付: <span class="c2">20</span></p>
+        <p style="text-align: center">当前汇率: <span class="c1"></span></p>
+        <p style="text-align: center">需支付: <span class="c2">0</span></p>
         <p style="text-align: center">充值与结算汇率一样</p>
         <!--        <div style="text-align: center">-->
         <!--            &lt;!&ndash;<button type="button" style="width: 80%;height:30px;color: #fff;background-color: red; border: none;" class="btn btn-info transaction">立即支付</button>&ndash;&gt;-->
@@ -175,27 +178,31 @@
         <!--    </div>-->
         <h6 class="xzcz">支付方式</h6>
         <ul class="mui-table-view mui-table-view-radio">
-            <li mt="wx1" rm="1" class="mui-table-view-cell mui-selected">
+
+            <!--            <li mt="wx1" rm="2" class="mui-table-view-cell">-->
+            <!--            <li mt="wx2" rm="2" class="mui-table-view-cell">-->
+            <!--                <a class="mui-navigate-right">-->
+            <!--                    <img class="zf" th:src="@{/images/wxzf.png}">云销卡支付 <span style="color: green">(可用 <span-->
+            <!--                        style="font-size: 10px">云销卡支付</span>)</span>-->
+            <!--                </a>-->
+            <!--            </li>-->
+            <li mt="ali1" rm="3" class="mui-table-view-cell mui-selected">
                 <a class="mui-navigate-right">
-                    <img class="zf" th:src="@{/images/wxzf.png}">微信H5支付 <span style="color: green">(可用 <span
-                        style="font-size: 10px">跳转浏览器充值</span>)</span>
+                    <img class="zf" th:src="@{/images/zfbzf.png}">支付宝支付
+                    <span style="color: green">(可用 <span
+                            style="font-size: 10px">推荐</span>)</span>
                 </a>
             </li>
-<!--            <li mt="wx1" rm="2" class="mui-table-view-cell">-->
-<!--                &lt;!&ndash;            <li mt="wx2" rm="2" class="mui-table-view-cell">&ndash;&gt;-->
-<!--                <a class="mui-navigate-right">-->
-<!--                    <img class="zf" th:src="@{/images/wxzf.png}">微信扫码支付 <span style="color: green">(可用 <span-->
-<!--                        style="font-size: 10px">长按扫码充值</span>)</span>-->
-<!--                </a>-->
-<!--            </li>-->
-            <!--<li class="mui-table-view-cell">-->
-            <!--<a class="mui-navigate-right">-->
-            <!--<img class="zf" th:src="@{/images/zfbzf.png}">支付宝支付-->
-            <!--</a>-->
-            <!--</li>-->
+
+            <li mt="wx1" rm="1" class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    <img class="zf" th:src="@{/images/wxzf.png}">微信聚合支付 <span style="color: green">(可用 <span
+                        style="font-size: 10px">建议使用支付宝</span>)</span>
+                </a>
+            </li>
         </ul>
 
-        <button type="button" class="mui-btn mui-btn-warning mui-btn-block transaction">立即充值</button>
+        <button type="button" class="mui-btn mui-btn-warning mui-btn-block transaction" style="background-color: #00aeef">立即充值</button>
         <div id="main" style="display: none"></div>
 
         <!--<div class="tz">-->
@@ -212,7 +219,7 @@
     </div>
 </div>
 <div id="app"></div>
-<form id="transactionForm" method="post">
+<form id="transactionForm" method="get">
     <input type="hidden" id="openid" name="openid">
     <input type="hidden" id="remake" name="remake">
     <input type="hidden" id="money" name="money">
@@ -240,14 +247,27 @@
     //     this.previousElementSibling.innerText = "checked："+value;
     // });
 
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });
     setInterval(function () {
-        var num = '7' + random(10, 50);
-        $('.c1').text(6.79 + num);
+        var num = '81' + random(10, 99);
+        $('.c1').text(6.9 + num);
     }, 1000);
 
     $.ajax({
@@ -268,12 +288,12 @@
     $('.btndiv2 button').click(function () {
         $('.btndiv2 button').removeAttr("check").removeClass('btnsdiv2');
         $(this).attr("check", "check").addClass('btnsdiv2');
-        // $(".c2").text((Number(this.innerText.substring(2) * 6.89).toFixed(2)));
-        if (this.innerText.substring(2) == "3") {
-            $(".c2").text("20");
-        } else {
-            $(".c2").text(this.innerText.substring(2) * 7);
-        }
+        $(".c2").text((Number(this.innerText.substring(2) * 6.9).toFixed(2)));
+        // if (this.innerText.substring(2) == "3") {
+        //     $(".c2").text("20");
+        // } else {
+        //     $(".c2").text(this.innerText.substring(2) * 7);
+        // }
 
     });
 
@@ -296,16 +316,20 @@
 //        console.log($('.mui-table-view-radio > li').children('a').text());
 //        console.log($('.mui-selected').attr('mt'));
         //发起请求
-        if ($('.mui-selected').attr('mt') == "wx1") {
-            popup({type: 'success', msg: "充值与结算汇率一样", delay: 1500});
+        if ($('.mui-selected').attr('mt') == "wx1" || $('.mui-selected').attr('mt') == "ali1") {
+            popup({type: 'success', msg: "充值与结算汇率相同", delay: 1500});
             setTimeout(function () {
                 $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
-            },1700)
+            }, 1700)
         }
-        if ($('.mui-selected').attr('mt') == "wx2") {
-            $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
-            // $("#transactionForm").attr("action", "/cocoker/transaction/recharge2").submit();
-        }
+        // if ($('.mui-selected').attr('mt') == "wx2") {
+        //     // $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
+        //     $("#transactionForm").attr("action", "/cocoker/transaction/recharge2").submit();
+        // }
+        // if ($('.mui-selected').attr('mt') == "ali1") {
+        //     // $("#transactionForm").attr("action", "/cocoker/transaction/recharge").submit();
+        //     $("#transactionForm").attr("action", "/cocoker/transaction/recharge3").submit();
+        // }
         //改变颜色
         $('.btndiv2 button').removeAttr("check").removeClass('btnsdiv2');
 //        $.ajax({

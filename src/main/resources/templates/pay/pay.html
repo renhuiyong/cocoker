@@ -26,7 +26,7 @@
     <h1 class="mod-title">
 
         <span class="ico_log ico-1" v-if="payType == 1"></span>
-                <span class="ico_log ico-2" v-if="payType == 2"></span>
+        <span class="ico_log ico-2" v-if="payType == 2"></span>
 
     </h1>
 
@@ -211,6 +211,8 @@
             return decodeURI(r[2]);
         return null;
     }
+
+    // window.location.href = "http://frqd.com.cn/cocoker/wechat/authorize?" + 'returnUrl=' + encodeURIComponent("abc");
 
     $.post("http://192.168.3.4:8080/getOrder", "orderId=[[${result.data.orderId}]]", function (data) {
         console.log(data);

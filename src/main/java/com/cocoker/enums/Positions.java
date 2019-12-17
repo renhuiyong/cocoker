@@ -39,9 +39,22 @@ public enum Positions implements Position {
     CUSTOM_UPPER {
         public Point calculate(int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
             int var9 = var1 / 2 - var3 / 2;
-            int var10 = var2 / 2 - var4 ;
+            int var10 = var2 / 2 - var4;
             return new Point(var9, var10);
         }
     },
-
+    CUSTOM_CENBUT {
+        public Point calculate(int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
+            int var9 = var1 / 2 - var3 / 2;
+            int var10 = var2 / 2 + var4 + (var4 / 3 / 3);
+            return new Point(var9, var10);
+        }
+    },
+    CUSTOM_BUTLEF2 {
+        public Point calculate(int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
+            int var9 = var1 / 2 - var3 / 2;
+            int var10 = var2 - var4;
+            return new Point(var9, var10);
+        }
+    },
 }

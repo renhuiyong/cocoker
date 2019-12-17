@@ -3,6 +3,7 @@ package com.cocoker.controller;
 import com.cocoker.VO.ResultVO;
 import com.cocoker.beans.*;
 import com.cocoker.dto.UserDetailDTO;
+import com.cocoker.enums.UserStatusEnum;
 import com.cocoker.service.*;
 import com.cocoker.utils.MD5;
 import com.cocoker.utils.RandomUtil;
@@ -21,10 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * @Description:
@@ -38,6 +36,9 @@ public class AdminController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private ComplaintService complaintService;
 
     @Autowired
     private OrderService orderService;
@@ -92,7 +93,8 @@ public class AdminController {
         map.put("allMoney", allMoney);
         //今日充值
         if (dayAllIncMoney != null) {
-            map.put("dayAllMoney", df.format(Double.valueOf(Double.valueOf(dayAllIncMoney) * 6.79)));
+            map.put("dayAllMoney", df.format(Double.valueOf(dayAllIncMoney)));
+//            map.put("dayAllMoney", df.format(Double.valueOf(Double.valueOf(dayAllIncMoney) * 6.79)));
         } else {
             map.put("dayAllMoney", "0");
         }
@@ -100,7 +102,7 @@ public class AdminController {
         map.put("allUserCount", allUserCount);
         //今日提现
         if (dayAllDecMoney != null) {
-            map.put("dayAllDecMoney", df.format(Double.valueOf(Double.valueOf(dayAllDecMoney) * 6.3)));
+            map.put("dayAllDecMoney", df.format(Double.valueOf(dayAllDecMoney)));
         } else {
             map.put("dayAllDecMoney", "0");
 
@@ -122,6 +124,19 @@ public class AdminController {
         Page<Order> pages = orderService.findListPage(pageRequest);
         map.put("pages", pages);
         return new ModelAndView("admin/ui-elements", map);
+    }
+
+    @GetMapping("/complaint")
+    public ModelAndView complaint(Map<String, Object> map) {
+        List<Complaint> allComplaint = complaintService.findAllComplaint();
+        map.put("allComplaint", allComplaint);
+        return new ModelAndView("admin/complaint", map);
+    }
+
+    @GetMapping("/clearComplaint")
+    public ModelAndView clearComplaint() {
+        complaintService.deleteAllComplaint();
+        return new ModelAndView("admin/complaint");
     }
 
     @GetMapping("/tab-panel")

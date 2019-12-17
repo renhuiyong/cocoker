@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>西瓜赢家</title>
+    <title>USDA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -121,7 +121,20 @@
 <script th:src="@{/js/mui.min.js}" src="../js/mui.min.js"></script>
 <script>
     mui('.mui-slider').slider().stopped = true;
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
 
     mui.init();
 

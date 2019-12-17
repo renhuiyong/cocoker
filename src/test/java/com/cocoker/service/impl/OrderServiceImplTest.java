@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @Version: 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OrderServiceImplTest {
 
     @Autowired

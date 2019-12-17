@@ -3,10 +3,7 @@ package com.cocoker.beans;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +16,7 @@ import java.util.Date;
 @Entity
 @Data
 @DynamicUpdate
+@Table(name = "tbl_tip")
 public class Tip implements Serializable{
 
     private static final long serialVersionUID = -895394583012217251L;

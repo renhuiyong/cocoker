@@ -4,6 +4,7 @@ import com.cocoker.beans.UserInfo;
 import com.cocoker.config.ProjectUrl;
 import com.cocoker.enums.ResultEnum;
 import com.cocoker.exception.CocokerException;
+import com.cocoker.service.TipService;
 import com.cocoker.service.UserInfoService;
 import com.cocoker.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +40,15 @@ public class WechatController {
     @Autowired
     private ProjectUrl projectUrl;
 
+    @Autowired
+    private TipService tipService;
 
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl, @RequestParam(value = "upOpenid", required = false) String upOpenid) {
         String url = projectUrl.getOauth2buildAuthorizationUrl() + "/cocoker/wechat/userInfo";
-        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(projectUrl.getReturnUrl() + "/cocoker/coc&upOpenid=" + upOpenid));
+        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(tipService.getReturnUrl() + "/cocoker/coc&upOpenid=" + upOpenid));
+//        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(projectUrl.getReturnUrl() + "/cocoker/coc&upOpenid=" + upOpenid));
 //        log.info("[微信网页授权] 获取code, redirectUrl = {}",redirectUrl);
         return "redirect:" + redirectUrl;
     }

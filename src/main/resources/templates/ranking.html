@@ -121,15 +121,15 @@
 <!--    <div class="picss"><img class="userpic"></div>-->
     <!-- 排行-->
     <ul id="list" class="mui-table-view mui-table-view-chevron zdlist">
-        <li class="mui-table-view-cell mui-media">
+        <li th:if="${no1 != null}" class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right">
                 <img th:src="@{/images/img/ph1.png}" class="h35"/>
-                <img style="border-radius: 50%;" th:src="${no1.y_upic}" class="h45 ml15"/>
+                <img  style="border-radius: 50%;" th:src="${no1.y_upic}" class="h45 ml15"/>
                 <span class="ml5">[[${no1.y_nickname}]]</span>
                 <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
             </a>
         </li>
-        <li class="mui-table-view-cell mui-media">
+        <li th:if="${no2 != null}" class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right">
                 <img th:src="@{/images/img/ph2.png}" class="h35"/>
                 <img th:src="${no2.y_upic}" style="border-radius: 50%;" class="h45 ml15"/>
@@ -137,7 +137,7 @@
                 <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
             </a>
         </li>
-        <li class="mui-table-view-cell mui-media">
+        <li th:if="${no3 != null}" class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right">
                 <img th:src="@{/images/img/ph3.png}" class="h35"/>
                 <img th:src="${no3.y_upic}" style="border-radius: 50%;" class="h45 ml15"/>
@@ -147,10 +147,11 @@
         </li>
         <li th:each="order,index : ${ods3}" class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right">
-                <span class="zdid">[[${index.index}+4]]</span>
+                <span class="zdid">[[${index.index}+1]]</span>
+<!--                <span class="zdid">[[${index.index}+4]]</span>-->
                 <img style="border-radius: 50%;" th:src="${order.y_upic}" class="h45 ml15"/>
-                <span class="ml5">[[${order.y_nickname}]]</span>
-                <p class="mui-ellipsis fr pdt10 zdnum">*****</p>
+                <span style="overflow: hidden;  white-space: nowrap; width: 100px; display: inline-flex;text-overflow:ellipsis" class="ml5">[[${order.y_nickname}]]</span>
+                <p class="mui-ellipsis fr pdt10 zdnum">[[${order.money}]]$</p>
             </a>
         </li>
 
@@ -177,7 +178,20 @@
             interval: 3000
         });
 
-    document.getElementById('notice').play();
+    var oAudio = document.getElementById('notice');
+    if (window.WeixinJSBridge) {
+        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            oAudio.play();
+        }, false);
+    } else {
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                oAudio.play();
+            });
+        }, false);
+    }
+    oAudio.play();
+    // document.getElementById('notice').play();
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });

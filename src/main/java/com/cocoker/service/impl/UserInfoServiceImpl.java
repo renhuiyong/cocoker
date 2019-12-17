@@ -1,29 +1,28 @@
 package com.cocoker.service.impl;
 
 import com.cocoker.beans.Commission;
+import com.cocoker.beans.Echarts;
 import com.cocoker.beans.UserInfo;
 import com.cocoker.dao.UserInfoDao;
 import com.cocoker.enums.ResultEnum;
 import com.cocoker.enums.UserStatusEnum;
 import com.cocoker.exception.CocokerException;
-import com.cocoker.service.CommissionService;
-import com.cocoker.service.OrderService;
-import com.cocoker.service.UserInfoService;
-import com.cocoker.utils.ResultVOUtil;
+import com.cocoker.service.*;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static com.cocoker.utils.DateUtil.getTime;
 
 /**
  * @Description:
@@ -41,7 +40,20 @@ public class UserInfoServiceImpl implements UserInfoService {
     private OrderService orderService;
 
     @Autowired
+    private EchartsService echartsService;
+
+    @Autowired
+    private WebSocket webSocket;
+
+
+    @Autowired
+    private UserInfoService userInfoService;
+    @Autowired
     private CommissionService commissionService;
+
+
+    private static SimpleDateFormat yMd = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public UserInfo findOne(Integer id) {
@@ -54,43 +66,65 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (openid == null || num == null || flag == null) {
             throw new CocokerException(ResultEnum.PARAM_ERROR);
         }
+
         UserInfo userInfo = userInfoDao.findByYOpenid(openid);
         if (userInfo == null) {
             throw new CocokerException(ResultEnum.USER_NOT_EXIST);
         }
-        if (Double.valueOf(index) < 6 || Double.valueOf(index) > 7 || Integer.valueOf(num) < 1) {
+
+        try {
+            Date d1 = sdf.parse(yMd.format(new Date()) + " " + currentDate);
+            Echarts e1 = echartsService.findByCreateTime(getTime(d1, 0));
+            if (!e1.getPrice().equals(index) || e1 == null) {
+                userInfo.setYUstatus(2);
+                userInfo.setYNickname("非法用户" + index + "，" + e1.getPrice());
+                userInfoService.save(userInfo);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        if (Double.valueOf(index) < 6 || Double.valueOf(index) > 7 || Integer.valueOf(num) < 5) {
             userInfo.setYUstatus(2);
             userInfoDao.save(userInfo);
-            log.error("[< 提交订单信息异常----++++++++++++++_____+++++],index: {},money : {}", index, num);
+            log.error("[< 提交订单信息异常----+++++++++++++++++++],index: {},money : {}", index, num);
             return null;
         }
-        if (userInfo.getYUstatus() != UserStatusEnum.DEFAULT_USER_STATUS.getCode()) {
+        if (userInfo.getYUstatus() != UserStatusEnum.DEFAULT_USER_STATUS.getCode() && userInfo.getYUstatus() != 11) {
             throw new CocokerException(ResultEnum.USER_STATUS_ERROR);
         }
         if (userInfo.getYUsermoney().doubleValue() + 0.01 < Double.valueOf(num)) {
 //        if (userInfo.getYUsermoney().doubleValue() + 0.01 < Double.valueOf(num) * 1.1) {
             throw new CocokerException(ResultEnum.MONEY_ERROR);
         }
-        userInfo.setYUsermoney(userInfo.getYUsermoney().subtract(new BigDecimal(num).multiply(new BigDecimal(1))).setScale(2, BigDecimal.ROUND_HALF_UP));
-//        userInfo.setYUsermoney(userInfo.getYUsermoney().subtract(new BigDecimal(num).multiply(new BigDecimal(1.1))).setScale(2, BigDecimal.ROUND_HALF_UP));
-        UserInfo save = userInfoDao.save(userInfo);
-        if (save == null) {
-            throw new CocokerException(ResultEnum.MONEY_ERROR);
-        }
+
         //下单
         int oid = orderService.addOrder(flag, index, num, openid, currentDate);
         log.info("[下单] 订单id:{}", oid);
 //        System.out.println(oid);
+
+        userInfo.setYUsermoney(userInfo.getYUsermoney().subtract(new BigDecimal(num).multiply(new BigDecimal(1))).setScale(2, BigDecimal.ROUND_HALF_UP));
+//        userInfo.setYUsermoney(userInfo.getYUsermoney().subtract(new BigDecimal(num).multiply(new BigDecimal(1.1))).setScale(2, BigDecimal.ROUND_HALF_UP));
+        UserInfo save = userInfoDao.save(userInfo);
+        //发送websocket消息
+        webSocket.sendMessage("有新的订单！金额:" + num);
+
+        if (save == null) {
+            throw new CocokerException(ResultEnum.MONEY_ERROR);
+        }
+
         //给代理加余额
         //one
         UserInfo one = userInfoDao.findByYOpenid(userInfo.getYOid());
 
         if (one != null) {
-            //5%,3%,2%,1%,1%,0.5%,0.5  --13
-            one.setYUsermoney(one.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.385)));
+            //5%,2%,1%,0.5%,0.5%,0.5%,0.5  --10
+            //10%,4%,2%,1%,1%,1%,1  --20
+            one.setYUsermoney(one.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.5)));
             userInfoDao.save(one);
             Commission c1 = new Commission();
-            c1.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.385));
+            c1.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.5));
 //            c1.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.3));
             c1.setCOpenid(one.getYOpenid());
             c1.setCreateTime(new Date());
@@ -101,11 +135,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             //two
             UserInfo tow = userInfoDao.findByYOpenid(one.getYOid());
             if (tow != null) {
-                //3/13
-                tow.setYUsermoney(tow.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.231)));
+                //4/20
+                tow.setYUsermoney(tow.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.2)));
                 userInfoDao.save(tow);
                 Commission c2 = new Commission();
-                c2.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.231));
+                c2.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.2));
 //                c2.setCMoney(new BigDecimal((Double.valueOf(num) * 0.2) * 0.15));
                 c2.setCOpenid(tow.getYOpenid());
                 c2.setCreateTime(new Date());
@@ -115,11 +149,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                 //three
                 UserInfo three = userInfoDao.findByYOpenid(tow.getYOid());
                 if (three != null) {
-                    //2/13
-                    three.setYUsermoney(three.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.154)));
+                    //2/20
+                    three.setYUsermoney(three.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.1)));
                     userInfoDao.save(three);
                     Commission c3 = new Commission();
-                    c3.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.154));
+                    c3.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.1));
                     c3.setCOpenid(three.getYOpenid());
                     c3.setCreateTime(new Date());
                     c3.setCLeven(3);
@@ -128,11 +162,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                     //four
                     UserInfo four = userInfoDao.findByYOpenid(three.getYOid());
                     if (four != null) {
-                        //1/13
-                        four.setYUsermoney(four.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.077)));
+                        //1/20
+                        four.setYUsermoney(four.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05)));
                         userInfoDao.save(four);
                         Commission c4 = new Commission();
-                        c4.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.077));
+                        c4.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05));
                         c4.setCOpenid(four.getYOpenid());
                         c4.setCreateTime(new Date());
                         c4.setCLeven(4);
@@ -141,11 +175,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                         //five
                         UserInfo five = userInfoDao.findByYOpenid(four.getYOid());
                         if (five != null) {
-                            //1/13
-                            five.setYUsermoney(five.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.077)));
+                            //1/20
+                            five.setYUsermoney(five.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05)));
                             userInfoDao.save(five);
                             Commission c5 = new Commission();
-                            c5.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.077));
+                            c5.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05));
                             c5.setCOpenid(five.getYOpenid());
                             c5.setCreateTime(new Date());
                             c5.setCLeven(5);
@@ -154,11 +188,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                             //six
                             UserInfo six = userInfoDao.findByYOpenid(five.getYOid());
                             if (six != null) {
-                                //0,5/13
-                                six.setYUsermoney(six.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.039)));
+                                //1/20
+                                six.setYUsermoney(six.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05)));
                                 userInfoDao.save(six);
                                 Commission c6 = new Commission();
-                                c6.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.039));
+                                c6.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05));
                                 c6.setCOpenid(six.getYOpenid());
                                 c6.setCreateTime(new Date());
                                 c6.setCLeven(6);
@@ -167,11 +201,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                                 //seven
                                 UserInfo seven = userInfoDao.findByYOpenid(six.getYOid());
                                 if (seven != null) {
-                                    //0.5/13
-                                    seven.setYUsermoney(seven.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.13) * 0.039)));
+                                    //1/20
+                                    seven.setYUsermoney(seven.getYUsermoney().add(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05)));
                                     userInfoDao.save(seven);
                                     Commission c7 = new Commission();
-                                    c7.setCMoney(new BigDecimal((Double.valueOf(num) * 0.13) * 0.039));
+                                    c7.setCMoney(new BigDecimal((Double.valueOf(num) * 0.1) * 0.05));
                                     c7.setCOpenid(seven.getYOpenid());
                                     c7.setCreateTime(new Date());
                                     c7.setCLeven(7);
@@ -249,7 +283,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = new UserInfo();
         userInfo.setYOtype(UserStatusEnum.DEFAULT_USER_STATUS.getCode());
         userInfo.setYUstatus(UserStatusEnum.DEFAULT_USER_STATUS.getCode());
-        userInfo.setYOid(oid);
+        if (oid.equals(wxMpUser.getOpenId())) {
+            userInfo.setYOid(null);
+        } else {
+            userInfo.setYOid(oid);
+        }
         userInfo.setYUsermoney(new BigDecimal(0));
         userInfo.setYUpic(wxMpUser.getHeadImgUrl());
         userInfo.setYUsertype(UserStatusEnum.DEFAULT_USER_STATUS.getCode());

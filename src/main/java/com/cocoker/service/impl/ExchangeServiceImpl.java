@@ -31,12 +31,12 @@ public class ExchangeServiceImpl implements ExchangeService {
     private UserInfoService userInfoService;
 
     @Override
-    public Exchange saveOne(String openid, String money,String exopenid) {
+    public Exchange saveOne(String openid, String money, String exopenid) {
         UserInfo user = userInfoService.findByOpenId(openid);
         if (user == null) {
             throw new CocokerException(-1, ResultEnum.USER_NOT_EXIST.getMsg());
         }
-        if(user.getYExchangeOpenid() == ""){
+        if (user.getYExchangeOpenid() == "") {
             user.setYExchangeOpenid(exopenid);
             userInfoService.save(user);
         }
@@ -51,7 +51,7 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     @Override
-    public Exchange updOne(String id,Integer code) {
+    public Exchange updOne(String id, Integer code) {
         Exchange one = exchangeDao.getOne(Integer.valueOf(id));
         one.setTStatus(code);
         Exchange e = exchangeDao.save(one);
@@ -68,7 +68,7 @@ public class ExchangeServiceImpl implements ExchangeService {
 
     @Override
     public Page<Exchange> findByTStatus(Integer status, Pageable pageable) {
-        return exchangeDao.findByTStatus(status,pageable);
+        return exchangeDao.findByTStatus(status, pageable);
     }
 
     @Override
@@ -85,5 +85,15 @@ public class ExchangeServiceImpl implements ExchangeService {
     public String findAllExchangeMoneySum(String openid) {
 
         return exchangeDao.findAllExchangeMoneySum(openid);
+    }
+
+    @Override
+    public String find60sIsNull(String openid) {
+        return exchangeDao.find60sIsNull(openid);
+    }
+
+    @Override
+    public String findtoDay5(String openid) {
+        return exchangeDao.findtoDay5(openid);
     }
 }

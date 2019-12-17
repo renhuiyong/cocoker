@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>领红包</title>
+</head>
+<link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
+<!-- Google Fonts-->
+<link rel="stylesheet" type="text/css" th:href="@{/dialog/style/dialog.css}" href="style/dialog.css">
+<body style="background-color: #ff5c52">
+<div>
+    <img style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/mt.png}">
+    <img class="info" m="5" style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/m5.png}">
+    <img class="info" m="20" style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/m20.png}">
+    <img class="info" m="50" style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/m50.png}">
+    <img class="info" m="188" style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/m188.png}">
+    <img style="width: 100%;height: 100%;" th:src="@{images/commissionredpack/mb2.png}">
+</div>
+<div onClick="javascript:window.location.href=document.referrer;"
+     style="width: 160px; height: 160px; position: fixed;bottom: 100px;border-radius: 50%;right: 10%; background-color: #ff0f00;line-height: 160px;text-align: center;font-size: 38px;color: white">
+    返回
+</div>
+<div id="app"></div>
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script th:src="@{/dialog/javascript/zepto.min.js}" src="javascript/zepto.min.js"></script>
+<script th:src="@{/dialog/javascript/dialog.min.js}" type="text/javascript" src="javascript/dialog.min.js"></script>
+<script th:src="@{/js/myvue.js}"></script>
+<script>
+    $(function () {
+        $(".info").click(function () {
+            //$(this).attr("m")
+            // if (result.code == 0) {
+            //     popup({type: 'success', msg: "操作成功", delay: 1000});
+            // } else {
+            //     popup({type: 'error', msg: result.msg, delay: 2000, bg: true, clickDomCancel: true});
+            // }
+            $.ajax({
+                url: "/cocoker/user/redpack",
+                type: "POST",
+                data: {"m": $(this).attr("m"), "openid": getCookie('openid')},
+                success: function (result) {
+                    if (result.code == 0) {
+                        popup({type: 'success', msg: "领取成功！", delay: 2000});
+                    } else {
+                        popup({type: 'error', msg: result.msg, delay: 1500, bg: true, clickDomCancel: true});
+                    }
+                }
+
+            })
+        })
+    })
+</script>
+</html>

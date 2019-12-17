@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 public enum UserStatusEnum {
     DEFAULT_USER_STATUS(0,"用户默认状态"),
+    USER_COMPLAINT_STATUS(3,"投诉禁用状态"),
     ;
     private Integer code;
 

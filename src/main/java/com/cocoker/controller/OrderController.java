@@ -2,12 +2,13 @@ package com.cocoker.controller;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+
 import static com.cocoker.utils.DateUtil.*;
+
+import com.cocoker.beans.*;
+import com.cocoker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,23 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cocoker.VO.ResultVO;
-import com.cocoker.beans.Commission;
-import com.cocoker.beans.Exchange;
-import com.cocoker.beans.Order;
-import com.cocoker.beans.Recharge;
-import com.cocoker.beans.Temp;
-import com.cocoker.beans.UserInfo;
 import com.cocoker.dao.OrderDao;
 import com.cocoker.dto.UserDetailDTO;
 import com.cocoker.enums.ResultEnum;
 import com.cocoker.exception.CocokerException;
-import com.cocoker.service.CommissionService;
-import com.cocoker.service.EchartsService;
-import com.cocoker.service.ExchangeService;
-import com.cocoker.service.OrderService;
-import com.cocoker.service.RechargeService;
-import com.cocoker.service.TempService;
-import com.cocoker.service.UserInfoService;
 import com.cocoker.utils.ResultVOUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -71,6 +59,9 @@ public class OrderController {
     @Autowired
     private EchartsService echartsService;
 
+    @Autowired
+    private TipService tipService;
+
     private String[][] imagelocations;
 
     public static final String[][] IMAGE_LOCATIONS = new String[][]{
@@ -92,9 +83,9 @@ public class OrderController {
 //            {"http://img0.imgtn.bdimg.com/it/u=1941739257,2931686383&fm=26&gp=0.jpg", "小HAN广交好友"},
 //            {"http://img2.imgtn.bdimg.com/it/u=3734214308,3602111578&fm=26&gp=0.jpg", "梦晓：活动关注朋友圈"},
 //            {"http://img2.imgtn.bdimg.com/it/u=974898855,3876304923&fm=26&gp=0.jpg", "招代课养号中。小陌"},
-            {"http://img4.imgtn.bdimg.com/it/u=2112776449,2996688223&fm=26&gp=0.jpg", "猛虎（关注朋友圈）"},
-            {"http://img2.imgtn.bdimg.com/it/u=4092485548,2414335682&fm=26&gp=0.jpg", "小刘 微科技工作室"},
-            {"http://img5.imgtn.bdimg.com/it/u=2519605715,3665627260&fm=26&gp=0.jpg", "苍总趣投（步）收实力代理"},
+//            {"http://img4.imgtn.bdimg.com/it/u=2112776449,2996688223&fm=26&gp=0.jpg", "猛虎（关注朋友圈）"},
+//            {"http://img2.imgtn.bdimg.com/it/u=4092485548,2414335682&fm=26&gp=0.jpg", "小刘 微科技工作室"},
+//            {"http://img5.imgtn.bdimg.com/it/u=2519605715,3665627260&fm=26&gp=0.jpg", "苍总趣投（步）收实力代理"},
     };
 
     public OrderController() {
@@ -117,7 +108,7 @@ public class OrderController {
             log.error("[创建订单] 订单错误 e={}", e.getMessage());
             return ResultVOUtil.error(-1, e.getMessage());
         }
-        return ResultVOUtil.success(new UserDetailDTO(userInfo.getYOrderid(),userInfo.getYUsername(), userInfo.getYNickname(), userInfo.getYUpic(), userInfo.getYUsermoney(), "请别黑我，谢谢大哥们！"));
+        return ResultVOUtil.success(new UserDetailDTO(userInfo.getYOrderid(), userInfo.getYUsername(), userInfo.getYNickname(), userInfo.getYUpic(), userInfo.getYUsermoney(), "请别黑我，谢谢大哥们！"));
     }
 
     @ResponseBody
@@ -127,13 +118,13 @@ public class OrderController {
                               @RequestParam("first") boolean first,
                               @RequestParam("currentMoney") String currentMoney,
                               @RequestParam("oid") Integer oid
-                              ) {
-    	List<Temp> temps = null;
-    	if(first){
-    		temps = tempService.findByTOpenidAndTime(openid);
-    	}else {
-    		temps = tempService.findByTOpenidAndOrderid(openid,oid+"");
-		}
+    ) {
+        List<Temp> temps = null;
+        if (first) {
+            temps = tempService.findByTOpenidAndTime(openid);
+        } else {
+            temps = tempService.findByTOpenidAndOrderid(openid, oid + "");
+        }
         UserInfo userInfo = new UserInfo();
         if (null != temps || temps.size() != 0) {//设置余额
             UserInfo user = userInfoService.findByOpenId(openid);
@@ -151,14 +142,14 @@ public class OrderController {
                 return ResultVOUtil.error(-1, ResultEnum.UPD_USER_BLANCE_ERR.getMsg());
             }
         }
-        return ResultVOUtil.success(new UserDetailDTO(oid+"",userInfo.getYUsername(), userInfo.getYNickname(), userInfo.getYUpic(), userInfo.getYUsermoney(), "请不要攻击我，谢谢！"));
+        return ResultVOUtil.success(new UserDetailDTO(oid + "", userInfo.getYUsername(), userInfo.getYNickname(), userInfo.getYUpic(), userInfo.getYUsermoney(), "请不要攻击我，谢谢！"));
 
     }
 
     @GetMapping("/order/orderDetail")
     @ResponseBody
     public ResultVO orderDetail(@RequestParam("oid") Integer oid) {
-    	Order order = orderDao.findOrderByOid(oid);
+        Order order = orderDao.findOrderByOid(oid);
         //Order order = orderService.findLastOrderByOpenid(openid);
         order.setHandle("别黑我,谢谢大佬");
         return ResultVOUtil.success(order);
@@ -193,8 +184,12 @@ public class OrderController {
     }
 
     @GetMapping("/recharge")
-    public ModelAndView recharge() {
-        return new ModelAndView("recharge");
+    public ModelAndView recharge(Map<String, Object> map) {
+        Tip allRechargeMoeny = tipService.findAllRechargeMoeny();
+        List<String> strings = Arrays.asList(allRechargeMoeny.getTipMsg().split("-"));
+
+        map.put("rechargeMoeny", strings);
+        return new ModelAndView("recharge", map);
     }
 
     @GetMapping("/rechargehistory")
@@ -479,19 +474,19 @@ public class OrderController {
     @GetMapping("/ranking")
     public ModelAndView rightph(Map<String, Object> map) {
         List<JSONObject> result3 = commissionService.findCommissionTop50();
-        for (int i = IMAGE_LOCATIONS.length - 1; i >= 0; i--) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("y_upic", imagelocations[i][0]);
-            jsonObject.put("y_nickname", imagelocations[i][1]);
-            jsonObject.put("c_openid", "openid");
-            result3.add(0, jsonObject);
-        }
-        map.put("no1", result3.get(0));
-        map.put("no2", result3.get(1));
-        map.put("no3", result3.get(2));
-        result3.remove(0);
-        result3.remove(0);
-        result3.remove(0);
+//        for (int i = IMAGE_LOCATIONS.length - 1; i >= 0; i--) {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("y_upic", imagelocations[i][0]);
+//            jsonObject.put("y_nickname", imagelocations[i][1]);
+//            jsonObject.put("c_openid", "openid");
+//            result3.add(0, jsonObject);
+//        }
+//        map.put("no1", result3.get(0));
+//        map.put("no2", result3.get(1));
+//        map.put("no3", result3.get(2));
+//        result3.remove(0);
+//        result3.remove(0);
+//        result3.remove(0);
         map.put("ods3", result3);
         return new ModelAndView("ranking", map);
     }

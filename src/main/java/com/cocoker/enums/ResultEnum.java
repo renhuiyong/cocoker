@@ -22,6 +22,8 @@ public enum  ResultEnum {
     ORDER_NOT_EXIST(-10,"订单不存在"),
     NOTICE_MERCHANT_ERROR(-11,"通知商户回调失败"),
     RECHARGE_MONEY_ERROR(-12,"充值金额异常"),
+    RECHARGE_TRY(-13,"请重试"),
+
 
     ;
     private Integer code;

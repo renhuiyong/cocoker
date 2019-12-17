@@ -17,4 +17,5 @@ public interface PayService {
 
     PayReturnParamVO create2(String openid, String money);
 
+//    Map<String, Object> create3(String openid, String money, String rm);
 }

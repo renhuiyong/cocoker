@@ -36,11 +36,16 @@ public interface OrderService {
     List<Order> findOrder20();
 
     Integer saveResult(String ofinal, String result, String handle, String oid);
-    
+
     List<Order> findOrderByTimes();
-    
+
     void changeOrders(String time, String price);
-    
+
     Order findLastOrderByOpenidAndCreateDate(String opid);
-    
+
+
+    //查找带修改赢的订单
+    List<Order> findToBeRevised();
+
+
 }

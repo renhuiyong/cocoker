@@ -38,6 +38,9 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#">订单列表</a></li>
+
+                <li ID="stopRefresh" style="float: right"><a href="#">关闭自动刷新</a></li>
+                <li ID="autoRefresh" style="float: right"><a href="#">自动刷新 / 5s </a></li>
             </ol>
 
         </div>
@@ -119,10 +122,12 @@
                                             [[${order.handle}]]
                                         </td>
                                         <td>
-                                            <button th:down="@{${order.oid}}"  type="button" class="btn btn-danger btn-sm down">
+                                            <button th:down="@{${order.oid}}" type="button"
+                                                    class="btn btn-danger btn-sm down">
                                                 <span aria-hidden="true"
                                                       class="glyphicon glyphicon-arrow-down"></span></button>
-                                            <button th:up="@{${order.oid}}" type="button" class="btn btn-success btn-sm up">
+                                            <button th:up="@{${order.oid}}" type="button"
+                                                    class="btn btn-success btn-sm up">
                                                 <span aria-hidden="true"
                                                       class="glyphicon glyphicon-arrow-up"></span></button>
                                         </td>
@@ -183,6 +188,13 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
+
+<audio id="mp31">
+    <source src="/cocoker/mp3/m1.mp3" type="audio/mpeg">
+</audio>
+<audio id="mp32">
+    <source src="/cocoker/mp3/m2.mp3" type="audio/mpeg">
+</audio>
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
@@ -198,15 +210,15 @@
 <script th:src="@{/webjars/jquery/3.1.1/jquery.js}" src="../static/js/jquery-3.1.1.min.js"></script>
 <script>
     $(function () {
-        $('.up').on('click',function () {
+        $('.up').on('click', function () {
             $.ajax({
-                url:"/cocoker/admin/operation/up/" + $(this).attr('up'),
+                url: "/cocoker/admin/operation/up/" + $(this).attr('up'),
                 type: "POST",
                 success: function (result) {
-                    if(result.code == 0){
-                        popup({type:'success',msg:"操作成功",delay:1000});
-                    }else{
-                        popup({type:'error',msg:result.msg,delay:2000,bg:true,clickDomCancel:true});
+                    if (result.code == 0) {
+                        popup({type: 'success', msg: "操作成功", delay: 1000});
+                    } else {
+                        popup({type: 'error', msg: result.msg, delay: 2000, bg: true, clickDomCancel: true});
                     }
                 }
 
@@ -215,22 +227,101 @@
     });
 
     $(function () {
-        $('.down').on('click',function () {
+        $('.down').on('click', function () {
             $.ajax({
-                url:"/cocoker/admin/operation/down/" + $(this).attr('down'),
+                url: "/cocoker/admin/operation/down/" + $(this).attr('down'),
                 type: "POST",
                 success: function (result) {
-                    if(result.code == 0){
-                        popup({type:'success',msg:"操作成功",delay:1000});
-                    }else{
-                        popup({type:'error',msg:result.msg,delay:2000,bg:true,clickDomCancel:true});
+                    if (result.code == 0) {
+                        popup({type: 'success', msg: "操作成功", delay: 1000});
+                    } else {
+                        popup({type: 'error', msg: result.msg, delay: 2000, bg: true, clickDomCancel: true});
                     }
                 }
 
             })
         })
     });
-</script>
+    var a1;
 
+    function auto() {
+        a1 = setTimeout(function () {
+            window.location.reload();
+        }, 10000)
+    }
+
+    auto();
+    $("#autoRefresh").click(function () {
+        auto();
+    })
+    $("#stopRefresh").click(function () {
+        clearTimeout(a1)
+    })
+
+</script>
+<!--websocket-->
+<script>
+    var websocket = null;
+    if ('WebSocket' in window) {
+        // websocket = new WebSocket('ws://rhyme.nat300.top/cocoker/webSocket')
+        websocket = new WebSocket('ws://frqd.com.cn/cocoker/webSocket')
+        // websocket = new WebSocket('ws://3o9xpl.cn/cocoker/webSocket')
+    } else {
+        alert('该浏览器不支持websocket！')
+    }
+    websocket.onopen = function (event) {
+        console.log('建立链接')
+    }
+    websocket.onclose = function (event) {
+        console.log('链接关闭')
+    }
+    websocket.onmessage = function (event) {
+
+        if (event.data.indexOf('有新的订单') >= 0) {
+            var oAudio = document.getElementById('mp32');
+            if (window.WeixinJSBridge) {
+                WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                    oAudio.play();
+                }, false);
+            } else {
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                        oAudio.play();
+                    });
+                }, false);
+            }
+            oAudio.play();
+            popup({type: 'success', msg: event.data, delay: 3000});
+        } else {
+            var oAudio = document.getElementById('mp31');
+            if (window.WeixinJSBridge) {
+                WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                    oAudio.play();
+                }, false);
+            } else {
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                        oAudio.play();
+                    });
+                }, false);
+            }
+            oAudio.play();
+            popup({type: 'success', msg: event.data, delay: 3000});
+        }
+
+    }
+    websocket.onerror = function () {
+        alert('websocket通信发送错误！')
+    }
+    websocket.onbeforeunload = function () {
+        websocket.close();
+    }
+
+
+    window.setInterval(function () {
+        var ping = {"type": "ping"};
+        websocket.send(JSON.stringify(ping));
+    }, 60 * 1000);
+</script>
 </body>
 </html>
